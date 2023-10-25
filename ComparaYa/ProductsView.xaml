@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ComparaYa.ProductsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ComparaYa"
+    BackgroundColor="#f4f5f8"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.IconImageSource>
+        <FileImageSource File="home.png" />
+    </ContentPage.IconImageSource>
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <FlexLayout
+            Grid.Row="0"
+            AlignItems="Center"
+            JustifyContent="Start">
+            <Image
+                Aspect="AspectFill"
+                HeightRequest="50"
+                Source="xd.png"
+                WidthRequest="50" />
+            <Label
+                Margin="15,0,0,0"
+                FontAttributes="Bold"
+                FontFamily="PPI"
+                FontSize="20"
+                Text="ComparaYa!"
+                TextColor="#020202" />
+        </FlexLayout>
+
+        <CollectionView
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            ItemsSource="{x:Static local:App.CategoriasCollection}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <FlexLayout
+                        Margin="4"
+                        AlignItems="Center"
+                        BackgroundColor="Transparent"
+                        JustifyContent="SpaceEvenly">
+                        <Button
+                            BackgroundColor="White"
+                            BorderColor="#e7e7e7"
+                            BorderWidth="2"
+                            CornerRadius="12"
+                            HeightRequest="45"
+                            Text="{Binding nombre}"
+                            TextColor="#020202" />
+                    </FlexLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <FlexLayout
+            Grid.Row="2"
+            Direction="Column"
+            JustifyContent="Center">
+            <SearchBar
+                CancelButtonColor="#757575"
+                HeightRequest="40"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="Search..."
+                PlaceholderColor="#9E9E9E"
+                TextColor="Black" />
+
+        </FlexLayout>
+
+        <CollectionView
+            Grid.Row="3"
+            BackgroundColor="Transparent"
+            ItemsSource="{x:Static local:App.ProductosCollection}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="20"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="20" />
+
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Margin="10"
+                        Padding="15"
+                        BackgroundColor="White"
+                        CornerRadius="9"
+                        HasShadow="False"
+                        HeightRequest="300">
+
+                        <StackLayout>
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="200"
+                                Source="{Binding imagen_url}" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                Text="{Binding nombre}"
+                                TextColor="#4A4A4A" />
+                            <Label
+                                x:Name="priced1"
+                                FontSize="14"
+                                Text="{Binding precio_d1}"
+                                TextColor="#77C65E">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding precio_d1}"
+                                        TargetType="Label"
+                                        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label
+                                x:Name="priceolim"
+                                FontSize="14"
+                                Text="{Binding precio_olim}"
+                                TextColor="#77C65E">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding precio_olim}"
+                                        TargetType="Label"
+                                        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label
+                                x:Name="priceexito"
+                                FontSize="14"
+                                Text="{Binding precio_exito}"
+                                TextColor="#77C65E">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding precio_exito}"
+                                        TargetType="Label"
+                                        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

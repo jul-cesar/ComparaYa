@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ComparaYa.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
+
+    <StackLayout
+        Padding="40"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="Center">
+        <Image
+            HeightRequest="180"
+            Source="xd.png"
+            WidthRequest="180" />
+
+        <Entry
+            Placeholder="Usuario"
+            PlaceholderColor="Gray"
+            TextColor="Black" />
+        <Entry
+            IsPassword="True"
+            Placeholder="Contraseña"
+            PlaceholderColor="Gray"
+            TextColor="Black" />
+        <Button
+            BackgroundColor="Transparent"
+            BorderColor="Black"
+            BorderWidth="1.5"
+            Clicked="Button_Clicked"
+            CornerRadius="50"
+            Text="Ingresar"
+            TextColor="Black"
+            VerticalOptions="Center" />
+
+        <Label HorizontalOptions="Center">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="No tienes una cuenta?" TextColor="Gray" />
+                    <Span
+                        FontAttributes="Bold"
+                        Text=" Registrarte"
+                        TextColor="Gray"
+                        TextDecorations="Underline" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </StackLayout>
+
+</ContentPage>
