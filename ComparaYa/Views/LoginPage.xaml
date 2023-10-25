@@ -15,10 +15,12 @@
             WidthRequest="180" />
 
         <Entry
-            Placeholder="Usuario"
+            x:Name="email"
+            Placeholder="email"
             PlaceholderColor="Gray"
             TextColor="Black" />
         <Entry
+            x:Name="passw"
             IsPassword="True"
             Placeholder="Contraseña"
             PlaceholderColor="Gray"
@@ -37,14 +39,17 @@
             <Label.FormattedText>
                 <FormattedString>
                     <Span Text="No tienes una cuenta?" TextColor="Gray" />
-                    <Span
-                        FontAttributes="Bold"
-                        Text=" Registrarte"
-                        TextColor="Gray"
-                        TextDecorations="Underline" />
+
+
                 </FormattedString>
             </Label.FormattedText>
+
         </Label>
+        <Button
+            Clicked="ToRegisterPage"
+            FontAttributes="Bold"
+            Text="Registrarte"
+            TextColor="Gray" />
     </StackLayout>
 
 </ContentPage>

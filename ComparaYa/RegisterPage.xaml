@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ComparaYa.RegisterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+
+        <StackLayout
+            Padding="40"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Center">
+            <Image
+                HeightRequest="180"
+                Source="xd.png"
+                WidthRequest="180" />
+
+            <Entry
+                x:Name="user"
+                Placeholder="email"
+                PlaceholderColor="Gray"
+                TextColor="Black" />
+            <Entry
+                x:Name="pass"
+                IsPassword="True"
+                Placeholder="Contraseña"
+                PlaceholderColor="Gray"
+                TextColor="Black" />
+            <Button
+                BackgroundColor="Transparent"
+                BorderColor="Black"
+                BorderWidth="1.5"
+                Clicked="Registrar"
+                CornerRadius="50"
+                Text="Ingresar"
+                TextColor="Black"
+                VerticalOptions="Center" />
+
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Ya tienes una cuenta?" TextColor="Gray" />
+
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Button
+                Clicked="ToLoginPage"
+                FontAttributes="Bold"
+                Text="Inicia sesion"
+                TextColor="Gray" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

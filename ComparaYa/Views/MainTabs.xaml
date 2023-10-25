@@ -7,12 +7,11 @@
     xmlns:local="clr-namespace:ComparaYa"
     android:TabbedPage.IsSwipePagingEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
-    BarBackgroundColor="#f1f5f9"
+    BarBackgroundColor="#F9FAFC"
     BarTextColor="Black"
     NavigationPage.HasBackButton="False"
     NavigationPage.HasNavigationBar="False">
     <!--  Pages can be added as references or inline  -->
-    <local:ProductsView />
-    <ContentPage Title="Tab 2" />
-    <ContentPage Title="Tab 3" />
+    <local:ProductsView Title="Productos" />
+    <local:UserPage Title="Usuario" />
 </TabbedPage>

@@ -25,14 +25,14 @@
             JustifyContent="Start">
             <Image
                 Aspect="AspectFill"
-                HeightRequest="50"
+                HeightRequest="60"
                 Source="xd.png"
-                WidthRequest="50" />
+                WidthRequest="60" />
             <Label
                 Margin="15,0,0,0"
                 FontAttributes="Bold"
                 FontFamily="PPI"
-                FontSize="20"
+                FontSize="30"
                 Text="ComparaYa!"
                 TextColor="#020202" />
         </FlexLayout>
