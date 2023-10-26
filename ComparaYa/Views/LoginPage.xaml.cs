@@ -5,37 +5,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Java.Util.Prefs;
+using Android.Preferences;
 
 namespace ComparaYa
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoginPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoginPage : ContentPage
+    {
         public string ApiKey = "AIzaSyAjgxZOgtQq3PwwHuwIE7MEu05KUIgW4zQ";
-        public LoginPage ()
-		{
-			InitializeComponent ();
-		}
+        public LoginPage()
+        {
+            InitializeComponent();
 
-        private async void Button_Clicked(object sender, EventArgs e)
-        {try
+            // Crear el TapGestureRecognizer
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            // Asignar el evento Tapped al método ToRegisterPage
+            tapGestureRecognizer.Tapped += ToRegisterPage;
+            // Añadir el TapGestureRecognizer al Label
+            registrarteLabel.GestureRecognizers.Add(tapGestureRecognizer);
+        }
+
+        private async void LogIn(object sender, EventArgs e)
+        {
+            //... (no hay cambios aquí)
+            try
             {
 
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(email.Text, passw.Text);
                 var content = await auth.GetFreshAuthAsync();
                 var serializedContent = JsonConvert.SerializeObject(content);
-
+                Xamarin.Essentials.Preferences.Set("firebaseRefreshToken", serializedContent);
                 await Navigation.PushAsync(new MainTabs());
                 email.Text = "";
                 passw.Text = "";
 
 
-            }catch(Exception ex) {
+            }
+            catch (Exception )
+            {
                 await DisplayAlert("Error", "Usuario o contraseña incorrectos", "ok");
             }
         }
@@ -44,5 +56,27 @@ namespace ComparaYa
         {
             await Navigation.PushAsync(new RegisterPage());
         }
+        private async void GetUserInfo(object sender, EventArgs e)
+        {
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+            try
+            {
+
+                var savedFirebaseAuth = JsonConvert.DeserializeObject<Firebase.Auth.FirebaseAuth>(Xamarin.Essentials.Preferences.Get("Firebase token", ""));
+                var refreshedContent = await authProvider.RefreshAuthAsync(savedFirebaseAuth);
+                Xamarin.Essentials.Preferences.Set("firebaseRefreshToken", JsonConvert.SerializeObject(refreshedContent));
+               /* UserName.text = savedFirebaseAuth.User.Email; */
+
+
+            }
+            catch (Exception ex)
+
+            {
+
+              await  DisplayAlert("error", "token expirado", "ok");
+
+
+            }
+        }
     }
-}
+    }

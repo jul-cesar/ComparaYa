@@ -3,6 +3,7 @@
     x:Class="ComparaYa.LoginPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Background="#F5F5F4"
     NavigationPage.HasNavigationBar="False">
 
     <StackLayout
@@ -10,46 +11,56 @@
         HorizontalOptions="FillAndExpand"
         VerticalOptions="Center">
         <Image
-            HeightRequest="180"
+            Margin="0,0,0,60"
+            Aspect="AspectFit"
+            HeightRequest="100"
             Source="xd.png"
-            WidthRequest="180" />
+            WidthRequest="100" />
+        <Label
+            Margin="20"
+            FontFamily="PPI"
+            FontSize="30"
+            HorizontalTextAlignment="Center"
+            Text="Iniciar sesion"
+            TextColor="Black" />
 
         <Entry
             x:Name="email"
+            Margin="10"
             Placeholder="email"
             PlaceholderColor="Gray"
             TextColor="Black" />
         <Entry
             x:Name="passw"
+            Margin="10"
             IsPassword="True"
             Placeholder="Contraseña"
             PlaceholderColor="Gray"
             TextColor="Black" />
         <Button
-            BackgroundColor="Transparent"
-            BorderColor="Black"
-            BorderWidth="1.5"
-            Clicked="Button_Clicked"
+            Margin="20"
+            Padding="10"
+            BackgroundColor="#4caf50"
+            Clicked="LogIn"
             CornerRadius="50"
             Text="Ingresar"
-            TextColor="Black"
+            TextColor="White"
             VerticalOptions="Center" />
+        <StackLayout
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            Spacing="5"
+            VerticalOptions="Center">
+            <Label Text="¿No tienes una cuenta?" TextColor="#9e9e9e" />
+            <Label
+                x:Name="registrarteLabel"
+                Text="Registrarte"
+                TextColor="#4caf50"
+                TextDecorations="Underline" />
+        </StackLayout>
 
-        <Label HorizontalOptions="Center">
-            <Label.FormattedText>
-                <FormattedString>
-                    <Span Text="No tienes una cuenta?" TextColor="Gray" />
 
 
-                </FormattedString>
-            </Label.FormattedText>
-
-        </Label>
-        <Button
-            Clicked="ToRegisterPage"
-            FontAttributes="Bold"
-            Text="Registrarte"
-            TextColor="Gray" />
     </StackLayout>
 
 </ContentPage>

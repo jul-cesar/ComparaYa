@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ComparaYa.UserPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.IconImageSource>
+        <FileImageSource File="user.png" />
+    </ContentPage.IconImageSource>
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="10">
+
+            <!--  Información del usuario  -->
+            <Frame CornerRadius="10" HasShadow="True">
+                <StackLayout Spacing="10">
+                    <Image
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        Source="user_profile.png"
+                        WidthRequest="100" />
+                    <Label
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        Text="Nombre de Usuario" />
+                    <Label
+                        FontAttributes="Italic"
+                        HorizontalOptions="Center"
+                        Text="user@email.com" />
+                    <Label HorizontalOptions="Center" Text="Número de teléfono" />
+                </StackLayout>
+            </Frame>
+
+            <!--  Botón para cambiar la foto de perfil  -->
+            <Button Text="Cambiar foto de perfil" />
+
+            <!--  Botón para cambiar la contraseña  -->
+            <Button Text="Cambiar contraseña" />
+
+            <!--  Botón para configuración de privacidad  -->
+            <Button Text="Configuración de privacidad" />
+
+            <!--  Botón para configuración de notificaciones  -->
+            <Button Text="Configuración de notificaciones" />
+
+            <!--  Botón para historial de compras o transacciones  -->
+            <Button Text="Historial de compras" />
+
+            <!--  Botón para lista de deseos o favoritos  -->
+            <Button Text="Lista de deseos" />
+
+            <!--  Botón para reseñas o calificaciones dadas  -->
+            <Button Text="Mis reseñas" />
+
+            <!--  Botón para contactar al soporte técnico o servicio al cliente  -->
+            <Button Text="Contactar soporte" />
+
+            <!--  Botón para cerrar sesión  -->
+            <Button
+                x:Name="logoutButton"
+                BackgroundColor="Red"
+                Text="Cerrar sesión"
+                TextColor="White" />
+
+
+        </StackLayout>
+    </ScrollView>
+
+
+
+</ContentPage>

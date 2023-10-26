@@ -56,6 +56,7 @@
                             BackgroundColor="White"
                             BorderColor="#e7e7e7"
                             BorderWidth="2"
+                            Clicked="Button_Clicked"
                             CornerRadius="12"
                             HeightRequest="45"
                             Text="{Binding nombre}"
@@ -79,7 +80,10 @@
 
         </FlexLayout>
 
+
+
         <CollectionView
+            x:Name="cvPro"
             Grid.Row="3"
             BackgroundColor="Transparent"
             ItemsSource="{x:Static local:App.ProductosCollection}">
@@ -91,6 +95,24 @@
                     VerticalItemSpacing="20" />
 
             </CollectionView.ItemsLayout>
+            <CollectionView.Header>
+                <FlexLayout Grid.Row="2">
+                    <Label
+                        x:Name="count"
+                        FontSize="15"
+                        TextColor="Black" />
+                </FlexLayout>
+            </CollectionView.Header>
+
+            <CollectionView.Footer>
+                <ActivityIndicator
+                    x:Name="loadMoreActivityIndicator"
+                    HorizontalOptions="Center"
+                    IsRunning="False"
+                    VerticalOptions="Center"
+                    Color="Blue" />
+            </CollectionView.Footer>
+
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>

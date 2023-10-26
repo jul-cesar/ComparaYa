@@ -1,4 +1,5 @@
 ﻿using ComparaYa.Models;
+using Firebase.Auth;
 using System;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
@@ -14,9 +15,13 @@ namespace ComparaYa
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage( new LoginPage());
-
+            if (!string.IsNullOrEmpty(Xamarin.Essentials.Preferences.Get("firebaseRefreshToken", ""))){
+                MainPage = new NavigationPage(new MainTabs());
+            }
+            else
+            {
+                MainPage = new NavigationPage(new LoginPage());
+            }
         }
 
         protected override void OnStart()
