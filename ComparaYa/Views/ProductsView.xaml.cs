@@ -12,6 +12,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using Xamarin.CommunityToolkit.Extensions;
+using Org.Apache.Http.Conn;
 
 namespace ComparaYa
 {
@@ -140,7 +141,7 @@ namespace ComparaYa
         }
 
         protected async Task openFilters() {
-            Navigation.ShowPopupAsync(new Modal());
+          await  Navigation.ShowPopupAsync(new Modal());
         }
 
 
@@ -212,11 +213,31 @@ namespace ComparaYa
 
         private async void cvPro_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var button = (Button)sender;
-            var item = (Product)button.BindingContext;
+            
+            var item = (Product)e.CurrentSelection.FirstOrDefault();
             await Navigation.PushAsync(new ComparationPage(item));
         }
 
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var button = (Label)sender;
+            var item = (Product)button.BindingContext;
 
+            Navigation.PushAsync(new ComparationPage(item));
+        }
+
+        public async Task imgModal(Product img)
+        {
+
+            await Navigation.ShowPopupAsync(new ImgModal(img));
+        }
+
+
+        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            var button = (Image)sender;
+            var item = (Product)button.BindingContext;
+            imgModal(item);
+        }
     }
     }

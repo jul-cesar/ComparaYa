@@ -89,9 +89,7 @@
             x:Name="cvPro"
             Grid.Row="3"
             BackgroundColor="Transparent"
-            ItemsSource="{x:Static local:App.ProductosCollection}"
-            SelectionChanged="cvPro_SelectionChanged"
-            SelectionMode="Single">
+            ItemsSource="{x:Static local:App.ProductosCollection}">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout
                     HorizontalItemSpacing="20"
@@ -118,8 +116,12 @@
                             <!--  Agregado VerticalOptions="FillAndExpand"  -->
                             <Image
                                 Aspect="AspectFit"
-                                HeightRequest="140"
-                                Source="{Binding imagen_url}" />
+                                HeightRequest="160"
+                                Source="{Binding imagen_url}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                                </Image.GestureRecognizers>
+                            </Image>
                             <Label
                                 FontFamily="PPI"
                                 FontSize="15"
@@ -162,8 +164,20 @@
                                 </Label.Triggers>
                             </Label>
 
+                            <Label
+                                x:Name="comp"
+                                Margin="4,10,0,0"
+                                HorizontalOptions="Center"
+                                Text="Comparar"
+                                TextColor="Black"
+                                TextDecorations="Underline"
+                                VerticalOptions="End">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                </Label.GestureRecognizers>
+                            </Label>
 
-
+                            <!--  Agregado VerticalOptions="End"  -->
                         </StackLayout>
                     </Frame>
 

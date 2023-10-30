@@ -1,12 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ComparaYa.ComparationPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+<ContentPage
+    x:Class="ComparaYa.ComparationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <CollectionView
+            x:Name="cvEqualsProducts"
+            Grid.Row="0"
+            BackgroundColor="Black"
+            ItemsSource="{Binding EqualsProducts}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.Header>
+                <Label Text="Productos iguales" TextColor="Wheat" />
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label
+                            FontFamily="PPI"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding nombre}"
+                            TextColor="Black" />
+                        <Image
+                            HeightRequest="200"
+                            Source="{Binding imagen_url}"
+                            WidthRequest="200" />
+                        <Label
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding precio_d1}"
+                            TextColor="Black" />
+                        <Label
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding precio_olim}"
+                            TextColor="Black" />
+                        <Label
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding precio_exito}"
+                            TextColor="Black" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <CollectionView
+            x:Name="cvAlikeProducts"
+            Grid.Row="1"
+            ItemsSource="{Binding AlikeProducts}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label
+                            FontFamily="PPI"
+                            FontSize="22"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding nombre}"
+                            TextColor="Black" />
+                        <Image
+                            HeightRequest="200"
+                            Source="{Binding imagen_url}"
+                            WidthRequest="200" />
+                        <Label
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding precio_d1}"
+                            TextColor="Black" />
+                        <Label
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding precio_olim}"
+                            TextColor="Black" />
+                        <Label
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding precio_exito}"
+                            TextColor="Black" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>
