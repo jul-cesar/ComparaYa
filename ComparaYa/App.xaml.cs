@@ -15,6 +15,7 @@ namespace ComparaYa
         public App()
         {
             InitializeComponent();
+
             if (!string.IsNullOrEmpty(Xamarin.Essentials.Preferences.Get("firebaseRefreshToken", ""))){
                 MainPage = new NavigationPage(new MainTabs());
             }
@@ -24,6 +25,7 @@ namespace ComparaYa
             }
         }
 
+     
         protected override void OnStart()
         {
         }

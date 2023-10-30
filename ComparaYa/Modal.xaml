@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup
+    x:Class="ComparaYa.Modal"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="#EEEEEE"
+    Size="420,650">
+    <Grid Margin="20" Padding="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="90" />
+        </Grid.RowDefinitions>
+        <Label
+            Grid.Row="0"
+            Margin="17"
+            FontFamily="PPI"
+            HorizontalTextAlignment="Center"
+            Text="Filtros"
+            TextColor="Black"
+            VerticalTextAlignment="Center" />
+        <Label
+            Grid.Row="1"
+            Margin="10"
+            FontFamily="PPI"
+            FontSize="17"
+            Text="Precios desde:"
+            TextColor="Black" />
+        <CollectionView
+            Grid.Row="2"
+            Margin="5"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding Items}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <FlexLayout Margin="5,3,5,3" BackgroundColor="Transparent">
+
+
+                        <Button
+                            BackgroundColor="White"
+                            BorderColor="Gray"
+                            BorderWidth="2"
+                            CornerRadius="13"
+                            HeightRequest="42"
+                            Text="{Binding .}"
+                            TextColor="#020202" />
+                    </FlexLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label
+            Grid.Row="3"
+            Margin="10"
+            FontFamily="PPI"
+            FontSize="17"
+            Text="Distribuidora:"
+            TextColor="Black" />
+
+        <CollectionView
+            Grid.Row="4"
+            Margin="5"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding Distris}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <FlexLayout
+                        Margin="5,3,5,3"
+                        AlignItems="Start"
+                        BackgroundColor="Transparent">
+
+                        <Button
+                            BackgroundColor="White"
+                            BorderColor="Gray"
+                            BorderWidth="2"
+                            CornerRadius="13"
+                            HeightRequest="42"
+                            Text="{Binding .}"
+                            TextColor="#020202" />
+                    </FlexLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</xct:Popup>

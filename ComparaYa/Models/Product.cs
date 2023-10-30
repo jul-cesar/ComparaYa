@@ -13,6 +13,8 @@ namespace ComparaYa.Models
         public string precio_olim { get; set; }
         public string precio_exito { get; set; }
         public int categoria_id { get; set; }
+
+
     }
 
 }

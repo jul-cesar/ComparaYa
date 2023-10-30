@@ -6,70 +6,66 @@
     NavigationPage.HasNavigationBar="False">
 
     <StackLayout
-        Padding="30"
+        Padding="40"
         HorizontalOptions="FillAndExpand"
-        Spacing="15"
         VerticalOptions="Center">
         <Image
-            Margin="0,0,0,10"
+            Margin="0,0,0,60"
+            Aspect="AspectFit"
             HeightRequest="100"
-            HorizontalOptions="Center"
-            Source="logo.png"
+            Source="xd.png"
             WidthRequest="100" />
         <Label
-            FontAttributes="Bold"
-            FontSize="24"
-            HorizontalOptions="Center"
-            Text="Registro"
-            TextColor="#424242" />
+            Margin="20"
+            FontFamily="PPI"
+            FontSize="30"
+            HorizontalTextAlignment="Center"
+            Text="Registrate"
+            TextColor="Black" />
+        <Entry
+            x:Name="name"
+            Margin="10"
+            Placeholder="Nombre"
+            PlaceholderColor="Gray"
+            TextColor="Black" />
 
-        <Frame
-            Padding="0"
-            BackgroundColor="White"
-            CornerRadius="10"
-            HasShadow="False">
-            <Entry
-                x:Name="user"
-                BackgroundColor="Transparent"
-                Placeholder="Email"
-                PlaceholderColor="#9e9e9e"
-                TextColor="#424242" />
-        </Frame>
-
-        <Frame
-            Padding="0"
-            BackgroundColor="White"
-            CornerRadius="10"
-            HasShadow="False">
-            <Entry
-                x:Name="pass"
-                BackgroundColor="Transparent"
-                IsPassword="True"
-                Placeholder="Contraseña"
-                PlaceholderColor="#9e9e9e"
-                TextColor="#424242" />
-        </Frame>
-
+        <Entry
+            x:Name="user"
+            Margin="10"
+            IsTextPredictionEnabled="True"
+            Placeholder="emails"
+            PlaceholderColor="Gray"
+            TextColor="Black" />
+        <Entry
+            x:Name="pass"
+            Margin="10"
+            IsPassword="True"
+            Placeholder="Contraseña"
+            PlaceholderColor="Gray"
+            TextColor="Black" />
         <Button
+            Margin="20"
             Padding="10"
             BackgroundColor="#4caf50"
             Clicked="Registrar"
             CornerRadius="50"
-            Text="Registrarse"
+            Text="Registrate"
             TextColor="White"
             VerticalOptions="Center" />
-
         <StackLayout
             HorizontalOptions="Center"
             Orientation="Horizontal"
             Spacing="5"
             VerticalOptions="Center">
-            <Label Text="¿Ya tienes una cuenta?" TextColor="#9e9e9e" />
+            <Label Text="¿No tienes una cuenta?" TextColor="#9e9e9e" />
             <Label
                 x:Name="iniciarSesionLabel"
-                Text="Iniciar sesión"
+                Text="Inicia sesion"
                 TextColor="#4caf50"
                 TextDecorations="Underline" />
         </StackLayout>
+
+
+
     </StackLayout>
 </ContentPage>

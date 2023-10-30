@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Java.Util.Prefs;
 using Android.Preferences;
+using Acr.UserDialogs;
 
 namespace ComparaYa
 {
@@ -34,13 +35,18 @@ namespace ComparaYa
             //... (no hay cambios aquí)
             try
             {
-
+                UserDialogs.Instance.ShowLoading("Cargando...");
+                await Task.Delay(1000);
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(email.Text, passw.Text);
                 var content = await auth.GetFreshAuthAsync();
                 var serializedContent = JsonConvert.SerializeObject(content);
                 Xamarin.Essentials.Preferences.Set("firebaseRefreshToken", serializedContent);
+                
+               
+               
                 await Navigation.PushAsync(new MainTabs());
+                UserDialogs.Instance.HideLoading();
                 email.Text = "";
                 passw.Text = "";
 
@@ -48,7 +54,9 @@ namespace ComparaYa
             }
             catch (Exception )
             {
+                UserDialogs.Instance.HideLoading();
                 await DisplayAlert("Error", "Usuario o contraseña incorrectos", "ok");
+               
             }
         }
 

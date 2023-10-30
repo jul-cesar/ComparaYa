@@ -5,10 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
     xmlns:local="clr-namespace:ComparaYa"
-    android:TabbedPage.IsSwipePagingEnabled="False"
     android:TabbedPage.ToolbarPlacement="Bottom"
     BarBackgroundColor="#F9FAFC"
-    BarTextColor="Black"
+    BarTextColor="#5c5c5c"
     NavigationPage.HasBackButton="False"
     NavigationPage.HasNavigationBar="False">
     <!--  Pages can be added as references or inline  -->

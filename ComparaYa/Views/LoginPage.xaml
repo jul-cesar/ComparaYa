@@ -3,7 +3,7 @@
     x:Class="ComparaYa.LoginPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Background="#F5F5F4"
+    Background="#f7f7f7"
     NavigationPage.HasNavigationBar="False">
 
     <StackLayout
@@ -11,22 +11,24 @@
         HorizontalOptions="FillAndExpand"
         VerticalOptions="Center">
         <Image
-            Margin="0,0,0,60"
+            Margin="0,0,0,25"
             Aspect="AspectFit"
             HeightRequest="100"
             Source="xd.png"
             WidthRequest="100" />
         <Label
-            Margin="20"
+            Margin="15"
+            FontAttributes="Bold"
             FontFamily="PPI"
             FontSize="30"
             HorizontalTextAlignment="Center"
             Text="Iniciar sesion"
-            TextColor="Black" />
+            TextColor="#5c5c5c" />
 
         <Entry
             x:Name="email"
             Margin="10"
+            IsTextPredictionEnabled="True"
             Placeholder="email"
             PlaceholderColor="Gray"
             TextColor="Black" />
@@ -40,7 +42,7 @@
         <Button
             Margin="20"
             Padding="10"
-            BackgroundColor="#4caf50"
+            BackgroundColor="#5c5c5c"
             Clicked="LogIn"
             CornerRadius="50"
             Text="Ingresar"
@@ -55,7 +57,7 @@
             <Label
                 x:Name="registrarteLabel"
                 Text="Registrarte"
-                TextColor="#4caf50"
+                TextColor="#5c5c5c"
                 TextDecorations="Underline" />
         </StackLayout>
 

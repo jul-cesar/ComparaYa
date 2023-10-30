@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
+using Xamarin.CommunityToolkit.Extensions;
 
 namespace ComparaYa
 {
@@ -22,20 +23,36 @@ namespace ComparaYa
         int currentPage = 1;
         int limit = 20; 
         bool isLoading = false;
+        bool isFilteredApplied;
+        private List<Product> filteredTips;
         private readonly HttpClient _cliente = new HttpClient();
+
 
         public ProductsView()
         {
             InitializeComponent();
-            
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += async (s, e) => {
+            await openFilters();
+            };
+            filters.GestureRecognizers.Add(tapGestureRecognizer);
+
+           
+
+
         }
 
 
 
         protected override async void OnAppearing()
         {
+           
             base.OnAppearing();
-            await FetchProductsFromServer();
+            
+            if(App.ProductosCollection.Count < 0 || App.ProductosCollection == null) {
+
+                await FetchProductsFromServer();
+            }
             await FetchCategoriasFromServer();
             cvPro.RemainingItemsThresholdReached += async (sender, e) =>
             {
@@ -44,7 +61,8 @@ namespace ComparaYa
             cvPro.RemainingItemsThreshold = 1;
         }
 
-   
+        
+        
         public async Task LoadMoreItems()
         {
             if (isLoading) return;
@@ -117,8 +135,14 @@ namespace ComparaYa
                     App.CategoriasCollection.Add(categoria);
                 }
 
+
             }
         }
+
+        protected async Task openFilters() {
+            Navigation.ShowPopupAsync(new Modal());
+        }
+
 
         protected async Task FetchProductsFromServer()
         {
@@ -141,7 +165,6 @@ namespace ComparaYa
                 {
                     App.ProductosCollection.Add(producto);
                 }
-               
             }
         }
 
@@ -171,5 +194,29 @@ namespace ComparaYa
                
             }
         }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchText = e.NewTextValue;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                cvPro.ItemsSource = App.ProductosCollection;
+            }
+            else
+            {
+                filteredTips = App.ProductosCollection.Where(tip => tip.nombre.ToLower().Normalize(NormalizationForm.FormD).Contains((searchText.ToLower()))).ToList();
+                cvPro.ItemsSource = filteredTips;
+            }
+        }
+
+        private async void cvPro_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var button = (Button)sender;
+            var item = (Product)button.BindingContext;
+            await Navigation.PushAsync(new ComparationPage(item));
+        }
+
+
     }
     }
