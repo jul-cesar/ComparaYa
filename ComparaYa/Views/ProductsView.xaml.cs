@@ -49,12 +49,19 @@ namespace ComparaYa
         {
            
             base.OnAppearing();
+            Console.WriteLine("categorias:", App.CategoriasCollection.Count.ToString());
             
-            if(App.ProductosCollection.Count < 0 || App.ProductosCollection == null) {
+            if(App.ProductosCollection.Count == 0 || App.ProductosCollection == null) {
 
                 await FetchProductsFromServer();
             }
-            await FetchCategoriasFromServer();
+
+            if (App.CategoriasCollection.Count == 0 || App.CategoriasCollection  == null)
+            {
+
+                await FetchCategoriasFromServer();
+            }
+           
             cvPro.RemainingItemsThresholdReached += async (sender, e) =>
             {
                 await LoadMoreItems();
@@ -82,7 +89,6 @@ namespace ComparaYa
                 {
                     string contentCat = await response.Content.ReadAsStringAsync();
                     var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Product>>(contentCat);
-                    
 
                     foreach (var prod in resultadoCat)
                     {
@@ -129,8 +135,8 @@ namespace ComparaYa
                 string contentCat = await response.Content.ReadAsStringAsync();
 
                 var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Categoria>>(contentCat);
-               
 
+                App.ProductosCollection.Clear();
                 foreach (var categoria in resultadoCat)
                 {
                     App.CategoriasCollection.Add(categoria);
@@ -192,25 +198,11 @@ namespace ComparaYa
                 {
                     App.ProductosCollection.Add(producto);
                 }
-               
+                currentPage = 2;
             }
         }
 
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string searchText = e.NewTextValue;
-
-            if (string.IsNullOrWhiteSpace(searchText))
-            {
-                cvPro.ItemsSource = App.ProductosCollection;
-            }
-            else
-            {
-                filteredTips = App.ProductosCollection.Where(tip => tip.nombre.ToLower().Normalize(NormalizationForm.FormD).Contains((searchText.ToLower()))).ToList();
-                cvPro.ItemsSource = filteredTips;
-            }
-        }
-
+    
         private async void cvPro_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             

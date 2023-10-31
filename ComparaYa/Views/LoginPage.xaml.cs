@@ -32,7 +32,7 @@ namespace ComparaYa
 
         private async void LogIn(object sender, EventArgs e)
         {
-            //... (no hay cambios aquí)
+       
             try
             {
                 UserDialogs.Instance.ShowLoading("Cargando...");
@@ -64,27 +64,6 @@ namespace ComparaYa
         {
             await Navigation.PushAsync(new RegisterPage());
         }
-        private async void GetUserInfo(object sender, EventArgs e)
-        {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-            try
-            {
-
-                var savedFirebaseAuth = JsonConvert.DeserializeObject<Firebase.Auth.FirebaseAuth>(Xamarin.Essentials.Preferences.Get("Firebase token", ""));
-                var refreshedContent = await authProvider.RefreshAuthAsync(savedFirebaseAuth);
-                Xamarin.Essentials.Preferences.Set("firebaseRefreshToken", JsonConvert.SerializeObject(refreshedContent));
-               /* UserName.text = savedFirebaseAuth.User.Email; */
-
-
-            }
-            catch (Exception ex)
-
-            {
-
-              await  DisplayAlert("error", "token expirado", "ok");
-
-
-            }
-        }
+       
     }
     }

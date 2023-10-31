@@ -33,7 +33,7 @@
             x:Name="user"
             Margin="10"
             IsTextPredictionEnabled="True"
-            Placeholder="emails"
+            Placeholder="email"
             PlaceholderColor="Gray"
             TextColor="Black" />
         <Entry

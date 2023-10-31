@@ -13,6 +13,7 @@
             <RowDefinition Height="90" />
             <RowDefinition Height="50" />
             <RowDefinition Height="90" />
+            <RowDefinition Height="90" />
         </Grid.RowDefinitions>
         <Label
             Grid.Row="0"
@@ -90,6 +91,16 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
+        <StackLayout
+            Grid.Row="5"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="EndAndExpand">
+            <Button
+                BackgroundColor="White"
+                BorderColor="Gray"
+                Text="Aplicar"
+                WidthRequest="100" />
+        </StackLayout>
     </Grid>
+
 </xct:Popup>

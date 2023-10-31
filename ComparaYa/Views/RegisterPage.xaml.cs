@@ -36,7 +36,7 @@ namespace ComparaYa
          public async Task RegistrarUserDB(string name, string correo, string pass)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("http://192.168.1.60:4000/usuarios/");  // Cambia la URL de acuerdo a tu endpoint de destino.
+            request.RequestUri = new Uri("http://10.0.2.2:4000/usuarios/");  // Cambia la URL de acuerdo a tu endpoint de destino.
             request.Method = HttpMethod.Post;  // Cambia el método a POST.
 
 

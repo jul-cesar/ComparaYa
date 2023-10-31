@@ -23,13 +23,16 @@ namespace ComparaYa
         public ComparationPage(Product prod)
         {
             InitializeComponent();
+
            
             palabraProducto = prod.nombre.Split(' ')[0];
 
             EqualsProducts = App.ProductosCollection.Where(p => p.nombre.Equals(prod.nombre)).ToList();
-            AlikeProducts = App.ProductosCollection.Where(p => p.nombre.Contains(palabraProducto)).ToList();
-            
-
+            AlikeProducts = App.ProductosCollection
+                            .Where(p => p.nombre.Contains(palabraProducto))
+                            .Except(EqualsProducts)
+                            .ToList();
+            eq.Text = $"Se han encontrado {EqualsProducts.Count.ToString()} productos iguales";
             BindingContext = this;
 
 

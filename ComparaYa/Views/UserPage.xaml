@@ -20,47 +20,28 @@
                         Source="user_profile.png"
                         WidthRequest="100" />
                     <Label
+                        x:Name="nombreUser"
                         FontAttributes="Bold"
                         HorizontalOptions="Center"
-                        Text="Nombre de Usuario" />
+                        TextColor="Black" />
                     <Label
+                        x:Name="emailUser"
                         FontAttributes="Italic"
                         HorizontalOptions="Center"
-                        Text="user@email.com" />
-                    <Label HorizontalOptions="Center" Text="Número de teléfono" />
+                        TextColor="Black" />
+
+
                 </StackLayout>
             </Frame>
 
-            <!--  Botón para cambiar la foto de perfil  -->
-            <Button Text="Cambiar foto de perfil" />
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button
+                    x:Name="logoutButton"
+                    BackgroundColor="Red"
+                    Text="Cerrar sesión"
+                    TextColor="White" />
+            </StackLayout>
 
-            <!--  Botón para cambiar la contraseña  -->
-            <Button Text="Cambiar contraseña" />
-
-            <!--  Botón para configuración de privacidad  -->
-            <Button Text="Configuración de privacidad" />
-
-            <!--  Botón para configuración de notificaciones  -->
-            <Button Text="Configuración de notificaciones" />
-
-            <!--  Botón para historial de compras o transacciones  -->
-            <Button Text="Historial de compras" />
-
-            <!--  Botón para lista de deseos o favoritos  -->
-            <Button Text="Lista de deseos" />
-
-            <!--  Botón para reseñas o calificaciones dadas  -->
-            <Button Text="Mis reseñas" />
-
-            <!--  Botón para contactar al soporte técnico o servicio al cliente  -->
-            <Button Text="Contactar soporte" />
-
-            <!--  Botón para cerrar sesión  -->
-            <Button
-                x:Name="logoutButton"
-                BackgroundColor="Red"
-                Text="Cerrar sesión"
-                TextColor="White" />
 
 
         </StackLayout>

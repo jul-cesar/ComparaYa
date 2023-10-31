@@ -81,7 +81,6 @@
                 HorizontalOptions="FillAndExpand"
                 Placeholder="Ej: Arroz"
                 PlaceholderColor="#9E9E9E"
-                TextChanged="SearchBar_TextChanged"
                 TextColor="Black" />
         </FlexLayout>
 
@@ -139,6 +138,23 @@
                                 <Label.Triggers>
                                     <DataTrigger
                                         Binding="{Binding precio_d1}"
+                                        TargetType="Label"
+                                        Value="0">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Label
+                                x:Name="priceolim"
+                                FontSize="14"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center">
+                                <Label.Text>
+                                    <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
+                                </Label.Text>
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding precio_olim}"
                                         TargetType="Label"
                                         Value="0">
                                         <Setter Property="IsVisible" Value="False" />
