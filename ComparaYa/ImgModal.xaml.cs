@@ -13,10 +13,10 @@ namespace ComparaYa
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ImgModal : Popup
 	{
-		public ImgModal (Product img)
+		public ImgModal (String img)
 		{
 			InitializeComponent ();
-			foto.Source = img.imagen_url;
+			foto.Source = img;
 		
 			
 		}

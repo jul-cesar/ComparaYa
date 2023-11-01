@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ComparaYa": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "IPC": "192.168.1.60",
+        "IPEMU": "10.0.2.2"
+      }
+    }
+  }
+}

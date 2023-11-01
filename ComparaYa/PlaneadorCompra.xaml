@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ComparaYa.PlaneadorCompra"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ComparaYa"
+    xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.IconImageSource>
+        <FileImageSource File="buy.png" />
+    </ContentPage.IconImageSource>
+    <StackLayout>
+        <Label
+            x:Name="carText"
+            Margin="12"
+            Padding="5"
+            FontFamily="PPI"
+            FontSize="22"
+            HorizontalTextAlignment="Center"
+            TextColor="Black" />
+
+        <CollectionView ItemsSource="{x:Static local:App.Carrito}">
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="CenterAndExpand">
+                    <lottie:AnimationView
+                        x:Name="empty"
+                        Animation="empty.json"
+                        AutoPlay="True"
+                        HorizontalOptions="FillAndExpand"
+                        RepeatMode="Infinite"
+                        VerticalOptions="FillAndExpand" />
+                    <Label
+                        Margin="20"
+                        Padding="10"
+                        FontFamily="PP"
+                        FontSize="17"
+                        HorizontalTextAlignment="Center"
+                        Text="Al parecer no hay nada aqui..."
+                        TextColor="DimGray" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <FlexLayout
+                        Padding="4"
+                        AlignItems="Center"
+                        BackgroundColor="Transparent"
+                        Direction="Row"
+                        JustifyContent="SpaceEvenly">
+                        <Image
+                            Margin="5"
+                            Aspect="AspectFit"
+                            BackgroundColor="Transparent"
+                            HeightRequest="200"
+                            Source="{Binding imagen_url}"
+                            WidthRequest="250" />
+                        <Frame
+                            Margin="10"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="9"
+                            WidthRequest="320">
+                            <StackLayout VerticalOptions="FillAndExpand">
+
+
+                                <StackLayout VerticalOptions="CenterAndExpand">
+                                    <Label
+                                        FontFamily="PPI"
+                                        FontSize="15"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding nombre}"
+                                        TextColor="#4A4A4A"
+                                        VerticalTextAlignment="Center" />
+                                    <Label
+                                        x:Name="priced1"
+                                        FontSize="14"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center">
+                                        <Label.Text>
+                                            <Binding Path="precio_d1" StringFormat="Precio D1: {0}" />
+                                        </Label.Text>
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding precio_d1}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label
+                                        x:Name="priceolim"
+                                        FontSize="14"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalTextAlignment="Center">
+                                        <Label.Text>
+                                            <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
+                                        </Label.Text>
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding precio_olim}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    <Label
+                                        x:Name="priceexito"
+                                        FontFamily="PP"
+                                        FontSize="15"
+                                        HorizontalOptions="CenterAndExpand"
+                                        TextColor="Black"
+                                        TextDecorations="Underline"
+                                        VerticalOptions="End"
+                                        VerticalTextAlignment="Center">
+                                        <Label.Text>
+                                            <Binding Path="precio_exito" StringFormat="Precio Exito: {0}" />
+                                        </Label.Text>
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding precio_exito}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <lottie:AnimationView
+                                        x:Name="delete"
+                                        Animation="deleteAni.json"
+                                        AutoPlay="True"
+                                        Clicked="delete_Clicked"
+                                        HeightRequest="60"
+                                        HorizontalOptions="EndAndExpand"
+                                        RepeatMode="Infinite"
+                                        VerticalOptions="Fill"
+                                        WidthRequest="60" />
+                                </StackLayout>
+
+                            </StackLayout>
+                        </Frame>
+
+
+                    </FlexLayout>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

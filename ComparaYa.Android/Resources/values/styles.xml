@@ -11,7 +11,10 @@
     <item name="colorPrimary">#2f2f2f</item>
     <!-- colorPrimaryDark is used for the status bar -->
    <item name="colorPrimaryDark">#2F2F2F</item>
-    <!-- colorAccent is used as the default value for colorControlActivated
+	  
+     <item name="android:colorActivatedHighlight">#fdfdff</item>
+
+	  <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
     <item name="colorAccent">#808080</item>
   </style>

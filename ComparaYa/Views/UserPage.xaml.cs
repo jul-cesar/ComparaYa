@@ -37,7 +37,7 @@ namespace ComparaYa
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri($"http://10.0.2.2:4000/usuarionombre/{email}"),
+                RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/usuarionombre/{email}"),
                 Method = HttpMethod.Get,
             };
             request.Headers.Add("Accept", "application/json");

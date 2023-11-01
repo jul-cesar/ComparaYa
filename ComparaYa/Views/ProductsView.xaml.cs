@@ -13,6 +13,11 @@ using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
 using Xamarin.CommunityToolkit.Extensions;
 using Org.Apache.Http.Conn;
+using Android.App;
+using Acr.UserDialogs;
+using Lottie.Forms;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ComparaYa
 {
@@ -22,7 +27,7 @@ namespace ComparaYa
         public decimal ipEmulador;
         public decimal ipPcCelu;
         int currentPage = 1;
-        int limit = 20; 
+        int limit = 16;
         bool isLoading = false;
         bool isFilteredApplied;
         private List<Product> filteredTips;
@@ -32,13 +37,7 @@ namespace ComparaYa
         public ProductsView()
         {
             InitializeComponent();
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += async (s, e) => {
-            await openFilters();
-            };
-            filters.GestureRecognizers.Add(tapGestureRecognizer);
 
-           
 
 
         }
@@ -47,40 +46,50 @@ namespace ComparaYa
 
         protected override async void OnAppearing()
         {
-           
             base.OnAppearing();
-            Console.WriteLine("categorias:", App.CategoriasCollection.Count.ToString());
-            
-            if(App.ProductosCollection.Count == 0 || App.ProductosCollection == null) {
+
+
+            if (App.ProductosCollection.Count == 0 || App.ProductosCollection == null)
+            {
 
                 await FetchProductsFromServer();
+          
             }
 
-            if (App.CategoriasCollection.Count == 0 || App.CategoriasCollection  == null)
+            if (App.CategoriasCollection.Count == 0 || App.CategoriasCollection == null)
             {
 
                 await FetchCategoriasFromServer();
             }
-           
+
+            cvPro.ItemsSource = App.ProductosCollection; 
+
+            NotifyPropertyChanged();
+
             cvPro.RemainingItemsThresholdReached += async (sender, e) =>
             {
                 await LoadMoreItems();
             };
-            cvPro.RemainingItemsThreshold = 1;
+            cvPro.RemainingItemsThreshold = 5;
+
+
         }
 
-        
-        
+
+
         public async Task LoadMoreItems()
         {
-            if (isLoading) return;
+            
+
             isLoading = true;
-            loadMoreActivityIndicator.IsRunning = true; 
+            loadMoreActivityIndicator.IsRunning = true;
+
+            
 
             try
             {
                 var request = new HttpRequestMessage();
-                request.RequestUri = new Uri($"http://10.0.2.2:4000/productos/{currentPage}/{limit}");
+                request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/productos/{currentPage}/{limit}");
                 request.Method = HttpMethod.Get;
                 request.Headers.Add("Accept", "application/json");
 
@@ -94,26 +103,27 @@ namespace ComparaYa
                     {
                         App.ProductosCollection.Add(prod);
                     }
-                    Task.Delay(1000);
+                    await Task.Delay(1000);
 
                     currentPage++;
                     if (resultadoCat.Count < limit)
                     {
-                        cvPro.Footer = null; 
+                        cvPro.Footer = null;
                     }
                 }
             }
             catch (Exception ex)
             {
-               await DisplayAlert("error", "error", "ok");
-              
+                await DisplayAlert("error", "error", "ok");
+
             }
             finally
             {
-            
+
                 loadMoreActivityIndicator.IsRunning = false;
                 isLoading = false;
             }
+            NotifyPropertyChanged();
         }
 
 
@@ -124,10 +134,10 @@ namespace ComparaYa
         {
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("http://10.0.2.2:4000/categorias/");
+            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/categorias/");
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
-           
+
             HttpResponseMessage response = await _cliente.SendAsync(request);
             if (response.StatusCode == HttpStatusCode.OK)
 
@@ -142,23 +152,20 @@ namespace ComparaYa
                     App.CategoriasCollection.Add(categoria);
                 }
 
-
-            }
+                NotifyPropertyChanged();
+;            }
         }
 
-        protected async Task openFilters() {
-          await  Navigation.ShowPopupAsync(new Modal());
-        }
 
 
         protected async Task FetchProductsFromServer()
         {
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"http://10.0.2.2:4000/productos/{currentPage}/{limit}");
+            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/productos/{currentPage}/{limit}");
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
-          
+
             HttpResponseMessage response = await _cliente.SendAsync(request);
             if (response.StatusCode == HttpStatusCode.OK)
 
@@ -172,6 +179,7 @@ namespace ComparaYa
                 {
                     App.ProductosCollection.Add(producto);
                 }
+                NotifyPropertyChanged();
             }
         }
 
@@ -181,7 +189,7 @@ namespace ComparaYa
             var item = (Categoria)button.BindingContext;
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"http://10.0.2.2:4000/productos/categoria/{item.id}");
+            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/productos/categoria/{item.id}");
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
 
@@ -197,39 +205,79 @@ namespace ComparaYa
                 foreach (var producto in resultado)
                 {
                     App.ProductosCollection.Add(producto);
+                    
                 }
                 currentPage = 2;
+                NotifyPropertyChanged();
             }
         }
 
-    
+
         private async void cvPro_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
             var item = (Product)e.CurrentSelection.FirstOrDefault();
-            await Navigation.PushAsync(new ComparationPage(item));
+            if (item != null)
+            {
+                await Navigation.PushAsync(new ComparationPage(item));
+
+          
+                var collectionView = (CollectionView)sender;
+                collectionView.SelectedItem = null;
+            }
+
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+
+
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var button = (Label)sender;
+            string searchText = e.NewTextValue;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                cvPro.ItemsSource = App.ProductosCollection;
+            }
+            else
+            {
+                filteredTips = App.ProductosCollection.Where(tip => tip.nombre.ToLower().Normalize(NormalizationForm.FormD).Contains((searchText.ToLower()))).ToList();
+                cvPro.ItemsSource = filteredTips;
+                NotifyPropertyChanged();
+            }
+        }
+
+
+
+        private async void addAni_Clicked(object sender, EventArgs e)
+        {
+            var button = (AnimationView)sender;
             var item = (Product)button.BindingContext;
+            if (App.Carrito.Contains(item))
+            {
+                await this.DisplayToastAsync("Este producto ya se encuentra en el carrito");
+            }
+            else
+            {
+                App.Carrito.Add(item);
+                UserDialogs.Instance.Toast("Producto agregado al carrito");
+                NotifyPropertyChanged();
+            }
 
-            Navigation.PushAsync(new ComparationPage(item));
+
+            await Task.Delay(1000);
         }
 
-        public async Task imgModal(Product img)
+        private async void AnimationView_Clicked(object sender, EventArgs e)
         {
-
-            await Navigation.ShowPopupAsync(new ImgModal(img));
+            await Navigation.ShowPopupAsync(new Modal());
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            var button = (Image)sender;
-            var item = (Product)button.BindingContext;
-            imgModal(item);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         }
     }
-    }
+}

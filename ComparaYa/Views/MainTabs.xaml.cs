@@ -12,9 +12,12 @@ namespace ComparaYa
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainTabs : TabbedPage
     {
-        public MainTabs ()
+
+
+        public MainTabs()
         {
             InitializeComponent();
+
         }
     }
 }

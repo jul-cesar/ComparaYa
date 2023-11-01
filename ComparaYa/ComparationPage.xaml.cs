@@ -29,10 +29,21 @@ namespace ComparaYa
 
             EqualsProducts = App.ProductosCollection.Where(p => p.nombre.Equals(prod.nombre)).ToList();
             AlikeProducts = App.ProductosCollection
-                            .Where(p => p.nombre.Contains(palabraProducto))
-                            .Except(EqualsProducts)
-                            .ToList();
-            eq.Text = $"Se han encontrado {EqualsProducts.Count.ToString()} productos iguales";
+                           .Where(p => p.nombre.Contains(palabraProducto))
+                           .Except(EqualsProducts)
+                           .ToList();
+
+            if (EqualsProducts.Count > 1)
+            {
+                eq.Text = $"Se han encontrado {EqualsProducts.Count.ToString()} productos iguales";
+               
+            }
+            else
+            {
+                eq.Text = "Este producto no se ha encontrado en otras distribuidoras";
+               
+            }
+
             BindingContext = this;
 
 
