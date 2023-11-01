@@ -193,7 +193,6 @@
 
                         </Frame>
 
-
                         <lottie:AnimationView
                             x:Name="addAni"
                             Animation="addAni.json"
@@ -204,8 +203,6 @@
                             RepeatMode="Infinite"
                             VerticalOptions="Fill"
                             WidthRequest="60" />
-
-
 
                     </StackLayout>
                 </DataTemplate>
