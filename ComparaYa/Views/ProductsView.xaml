@@ -112,23 +112,26 @@
             </CollectionView.Footer>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout BackgroundColor="Transparent">
+                    <StackLayout
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="CenterAndExpand">
                         <Frame
-                            Margin="10"
-                            Padding="10"
+                            Margin="4"
+                            Padding="12"
                             BackgroundColor="White"
                             CornerRadius="9">
                             <StackLayout VerticalOptions="FillAndExpand">
 
                                 <Image
-                                    Aspect="AspectFit"
+                                    Aspect="AspectFill"
                                     BackgroundColor="Transparent"
-                                    HeightRequest="160"
-                                    Source="{Binding imagen_url}" />
+                                    Source="{Binding imagen_url}"
+                                    VerticalOptions="CenterAndExpand" />
                                 <StackLayout VerticalOptions="FillAndExpand">
                                     <Label
-                                        FontFamily="PPI"
-                                        FontSize="15"
+                                        FontFamily="PP"
+                                        FontSize="14"
                                         HorizontalTextAlignment="Center"
                                         Text="{Binding nombre}"
                                         TextColor="#4A4A4A" />
@@ -169,14 +172,14 @@
 
                                     <Label
                                         x:Name="priceexito"
-                                        FontFamily="PP"
-                                        FontSize="16"
+                                        FontFamily="PPI"
+                                        FontSize="15"
                                         HorizontalOptions="CenterAndExpand"
                                         TextColor="Black"
-                                        TextDecorations="Underline"
-                                        VerticalOptions="End">
+                                        VerticalOptions="End"
+                                        VerticalTextAlignment="Center">
                                         <Label.Text>
-                                            <Binding Path="precio_exito" StringFormat="Precio Exito: {0}" />
+                                            <Binding Path="precio_exito" StringFormat="Exito: {0}" />
                                         </Label.Text>
                                         <Label.Triggers>
                                             <DataTrigger
@@ -198,11 +201,11 @@
                             Animation="addAni.json"
                             AutoPlay="True"
                             Clicked="addAni_Clicked"
-                            HeightRequest="60"
+                            HeightRequest="50"
                             HorizontalOptions="FillAndExpand"
                             RepeatMode="Infinite"
                             VerticalOptions="Fill"
-                            WidthRequest="60" />
+                            WidthRequest="30" />
 
                     </StackLayout>
                 </DataTemplate>

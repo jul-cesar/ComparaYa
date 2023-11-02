@@ -35,7 +35,7 @@
                         FontFamily="PP"
                         FontSize="17"
                         HorizontalTextAlignment="Center"
-                        Text="Al parecer no hay nada aqui..."
+                        Text="Al parecer no hay nada aqui... agrega productos al carrito"
                         TextColor="DimGray" />
                 </StackLayout>
             </CollectionView.EmptyView>

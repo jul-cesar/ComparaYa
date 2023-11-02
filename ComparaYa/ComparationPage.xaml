@@ -8,9 +8,9 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -45,18 +45,19 @@
                     <Frame
                         Margin="20"
                         BackgroundColor="White"
-                        WidthRequest="400">
+                        HeightRequest="200"
+                        VerticalOptions="CenterAndExpand"
+                        WidthRequest="100">
                         <StackLayout VerticalOptions="FillAndExpand">
                             <Label
                                 FontFamily="PPI"
                                 FontSize="15"
+                                HeightRequest="120"
                                 HorizontalTextAlignment="Center"
                                 Text="{Binding nombre}"
-                                TextColor="Black" />
-                            <Image
-                                HeightRequest="150"
-                                Source="{Binding imagen_url}"
-                                WidthRequest="200" />
+                                TextColor="Black"
+                                WidthRequest="100" />
+                            <Image Source="{Binding imagen_url}" />
                             <Label
                                 x:Name="priced1"
                                 FontSize="14"
@@ -96,7 +97,8 @@
                                 x:Name="priceexito"
                                 FontSize="14"
                                 HorizontalTextAlignment="Center"
-                                VerticalOptions="End">
+                                VerticalOptions="EndAndExpand"
+                                VerticalTextAlignment="End">
                                 <Label.Text>
                                     <Binding Path="precio_exito" StringFormat="Precio Exito: {0}" />
                                 </Label.Text>
@@ -125,7 +127,7 @@
                 FontFamily="PPI"
                 FontSize="15"
                 HorizontalTextAlignment="Center"
-                Text="Productos similares"
+                Text="Tambien te puede interesar"
                 TextColor="Black" />
         </FlexLayout>
 
@@ -140,17 +142,20 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Margin="20" VerticalOptions="FillAndExpand">
+                    <StackLayout
+                        Margin="20"
+                        Padding="10"
+                        VerticalOptions="FillAndExpand">
                         <Label
                             FontFamily="PPI"
-                            FontSize="16"
+                            FontSize="14"
                             HorizontalTextAlignment="Center"
                             Text="{Binding nombre}"
                             TextColor="Black" />
                         <Image
                             HeightRequest="200"
                             Source="{Binding imagen_url}"
-                            WidthRequest="200" />
+                            WidthRequest="100" />
                         <Label
                             x:Name="priced1"
                             FontSize="14"

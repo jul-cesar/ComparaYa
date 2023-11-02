@@ -80,12 +80,9 @@ namespace ComparaYa
         public async Task LoadMoreItems()
         {
             
-
+            if(isLoading) return;   
             isLoading = true;
             loadMoreActivityIndicator.IsRunning = true;
-
-            
-
             try
             {
                 var request = new HttpRequestMessage();
@@ -103,7 +100,7 @@ namespace ComparaYa
                     {
                         App.ProductosCollection.Add(prod);
                     }
-                    await Task.Delay(1000);
+                 
 
                     currentPage++;
                     if (resultadoCat.Count < limit)
@@ -207,7 +204,7 @@ namespace ComparaYa
                     App.ProductosCollection.Add(producto);
                     
                 }
-                currentPage = 2;
+               
                 NotifyPropertyChanged();
             }
         }
