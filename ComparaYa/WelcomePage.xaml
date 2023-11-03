@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ComparaYa.WelcomePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <StackLayout VerticalOptions="CenterAndExpand">
+
+        <lottie:AnimationView
+            Animation="welcome2.json"
+            AutoPlay="True"
+            HeightRequest="450"
+            RepeatMode="Infinite"
+            VerticalOptions="FillAndExpand" />
+        <FlexLayout
+            Margin="5"
+            AlignItems="Center"
+            Direction="Column">
+            <Button
+                BackgroundColor="White"
+                BorderColor="Gray"
+                BorderWidth="1"
+                Clicked="Button_Clicked_1"
+                CornerRadius="20"
+                Text="Inicia sesion" />
+            <Label
+                FontSize="20"
+                Text="o"
+                TextColor="Black"
+                VerticalTextAlignment="Center" />
+            <Button
+                BackgroundColor="White"
+                BorderColor="Gray"
+                BorderWidth="1"
+                Clicked="Button_Clicked"
+                CornerRadius="20"
+                Text="Registrate" />
+        </FlexLayout>
+
+
+    </StackLayout>
+
+</ContentPage>

@@ -16,6 +16,8 @@ namespace ComparaYa
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlaneadorCompra : ContentPage
     {
+      
+
         public PlaneadorCompra()
         {
             InitializeComponent();
@@ -23,6 +25,7 @@ namespace ComparaYa
             if (App.Carrito.Count > 0)
             {
                 carText.Text = "Mi carrito";
+               
             }
 
 
@@ -35,15 +38,57 @@ namespace ComparaYa
             App.Carrito.Remove(itemxd);
             App.Carrito.Where(p => p != itemxd);
             await this.DisplayToastAsync("Producto eliminado del carrito");
-            NotifyPropertyChanged();
-
+          
+          
+          
         }
-        public event PropertyChangedEventHandler PropertyChanged;
+
+        public async Task imgModal(Product img)
+        {
+
+            await Navigation.ShowPopupAsync(new ImgModal(img.imagen_url));
+           
+        }
+
+
+        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            var button = (Image)sender;
+            var item = (Product)button.BindingContext;
+            imgModal(item);
+        }
+    
+    public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var item = (Product)button.BindingContext;
+            if (int.TryParse(item.cantidad, out int cantidadNumerica))
+            {
+                cantidadNumerica--;
+                item.cantidad = cantidadNumerica.ToString();
+              
+            }
+        }
+
+        private void Button_Clicked_1(object sender, EventArgs e)     
+        {
+            var button = (Button)sender;
+            var item = (Product)button.BindingContext;
+            if (int.TryParse(item.cantidad, out int cantidadNumerica))
+            {
+                cantidadNumerica++;
+                item.cantidad = cantidadNumerica.ToString();
+
+            }
+        }
+
     }
 }

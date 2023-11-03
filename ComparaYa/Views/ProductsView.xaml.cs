@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Newtonsoft.Json;
@@ -22,7 +21,7 @@ using System.Runtime.CompilerServices;
 namespace ComparaYa
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProductsView : ContentPage
+    public partial class ProductsView : ContentPage, INotifyPropertyChanged
     {
         public decimal ipEmulador;
         public decimal ipPcCelu;

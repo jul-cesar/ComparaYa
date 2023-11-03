@@ -10,7 +10,7 @@
 
     <Image
         x:Name="foto"
-        HeightRequest="500"
+        HeightRequest="400"
         WidthRequest="400" />
 
 

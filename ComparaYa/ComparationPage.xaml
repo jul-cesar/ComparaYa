@@ -51,13 +51,13 @@
                         <StackLayout VerticalOptions="FillAndExpand">
                             <Label
                                 FontFamily="PPI"
-                                FontSize="15"
+                                FontSize="13"
                                 HeightRequest="120"
                                 HorizontalTextAlignment="Center"
                                 Text="{Binding nombre}"
                                 TextColor="Black"
                                 WidthRequest="100" />
-                            <Image Source="{Binding imagen_url}" />
+                            <Image HeightRequest="130" Source="{Binding imagen_url}" />
                             <Label
                                 x:Name="priced1"
                                 FontSize="14"

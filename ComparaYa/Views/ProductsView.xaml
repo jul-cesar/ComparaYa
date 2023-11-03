@@ -39,6 +39,7 @@
                 AutoPlay="True"
                 Clicked="AnimationView_Clicked"
                 HeightRequest="30"
+                RepeatCount="3"
                 RepeatMode="Infinite"
                 VerticalOptions="FillAndExpand"
                 WidthRequest="30" />
@@ -203,6 +204,7 @@
                             Clicked="addAni_Clicked"
                             HeightRequest="50"
                             HorizontalOptions="FillAndExpand"
+                            RepeatCount="3"
                             RepeatMode="Infinite"
                             VerticalOptions="Fill"
                             WidthRequest="30" />

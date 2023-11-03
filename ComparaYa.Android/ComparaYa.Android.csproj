@@ -75,6 +75,8 @@
     <AndroidAsset Include="Assets\filtersAni.json" />
     <AndroidAsset Include="Assets\deleteAni.json" />
     <AndroidAsset Include="Assets\empty.json" />
+    <AndroidAsset Include="Assets\welcome2.json" />
+    <AndroidAsset Include="Assets\load.json" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

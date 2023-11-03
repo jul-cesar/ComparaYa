@@ -52,8 +52,9 @@ namespace ComparaYa
         {
             try
             {
-                
-                UserDialogs.Instance.ShowLoading("Cargando...");
+
+                backdark.IsVisible = true;
+                backdark.IsVisible = load.IsVisible = true;
                 await Task.Delay(2000);
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(user.Text, pass.Text);
@@ -63,11 +64,16 @@ namespace ComparaYa
                 
               
                 UserDialogs.Instance.HideLoading();
+                backdark.Opacity = 0;
+                backdark.IsVisible = load.IsVisible = false;
+                backdark.IsVisible = false;
                 await DisplayAlert("Registro", user.Text, "ok");
                 
             }
             catch (Exception ex)
             {
+                backdark.IsVisible = load.IsVisible = false;
+                backdark.IsVisible = false;
                 UserDialogs.Instance.HideLoading();
                 await DisplayAlert("Error", user.Text, "ok");
 

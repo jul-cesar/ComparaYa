@@ -2,70 +2,95 @@
     x:Class="ComparaYa.RegisterPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="#f5f5f5"
+    xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
+    <Grid>
 
-    <StackLayout
-        Padding="40"
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="Center">
-        <Image
-            Margin="0,0,0,60"
-            Aspect="AspectFit"
-            HeightRequest="100"
-            Source="xd.png"
-            WidthRequest="100" />
-        <Label
-            Margin="20"
-            FontFamily="PPI"
-            FontSize="30"
-            HorizontalTextAlignment="Center"
-            Text="Registrate"
-            TextColor="Black" />
-        <Entry
-            x:Name="name"
-            Margin="10"
-            Placeholder="Nombre"
-            PlaceholderColor="Gray"
-            TextColor="Black" />
 
-        <Entry
-            x:Name="user"
-            Margin="10"
-            IsTextPredictionEnabled="True"
-            Placeholder="email"
-            PlaceholderColor="Gray"
-            TextColor="Black" />
-        <Entry
-            x:Name="pass"
-            Margin="10"
-            IsPassword="True"
-            Placeholder="Contraseña"
-            PlaceholderColor="Gray"
-            TextColor="Black" />
-        <Button
-            Margin="20"
-            Padding="10"
-            BackgroundColor="#4caf50"
-            Clicked="Registrar"
-            CornerRadius="50"
-            Text="Registrate"
-            TextColor="White"
-            VerticalOptions="Center" />
         <StackLayout
-            HorizontalOptions="Center"
-            Orientation="Horizontal"
-            Spacing="5"
+            Padding="40"
+            HorizontalOptions="FillAndExpand"
             VerticalOptions="Center">
-            <Label Text="¿No tienes una cuenta?" TextColor="#9e9e9e" />
+            <Image
+                Margin="0,0,0,30"
+                Aspect="AspectFit"
+                HeightRequest="100"
+                Source="xd.png"
+                WidthRequest="100" />
             <Label
-                x:Name="iniciarSesionLabel"
-                Text="Inicia sesion"
-                TextColor="#4caf50"
-                TextDecorations="Underline" />
+                Margin="10"
+                FontFamily="PP"
+                FontSize="24"
+                HorizontalTextAlignment="Center"
+                Text="Registrate"
+                TextColor="Black" />
+            <Entry
+                
+                x:Name="name"
+                Margin="10"
+                Keyboard="Text"
+                Placeholder="Nombre"
+                PlaceholderColor="Gray"
+                TextColor="Black" />
+
+            <Entry
+                x:Name="user"
+                Margin="10"
+                IsTextPredictionEnabled="True"
+                Keyboard="Email"
+                Placeholder="email"
+                PlaceholderColor="Gray"
+                TextColor="Black" />
+            <Entry
+                x:Name="pass"
+                Margin="10"
+                IsPassword="True"
+                Placeholder="Contraseña"
+                PlaceholderColor="Gray"
+                TextColor="Black" />
+            <Button
+                Margin="20"
+                Padding="10"
+                BackgroundColor="White"
+                BorderColor="Gray"
+                BorderWidth="1"
+                Clicked="Registrar"
+                CornerRadius="50"
+                Text="Registrate"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <StackLayout
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                Spacing="5"
+                VerticalOptions="Center">
+                <Label Text="¿No tienes una cuenta?" TextColor="#9e9e9e" />
+                <Label
+                    x:Name="iniciarSesionLabel"
+                    Text="Inicia sesion"
+                    TextColor="Gray"
+                    TextDecorations="Underline" />
+            </StackLayout>
+
+
+
         </StackLayout>
-
-
-
-    </StackLayout>
+        <BoxView
+            x:Name="backdark"
+            IsVisible="false"
+            Opacity="0.4"
+            Color="Black" />
+        <AbsoluteLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <lottie:AnimationView
+                x:Name="load"
+                Animation="load.json"
+                AutoPlay="True"
+                HeightRequest="110"
+                HorizontalOptions="Center"
+                IsVisible="false"
+                RepeatMode="Infinite"
+                WidthRequest="110" />
+        </AbsoluteLayout>
+    </Grid>
 </ContentPage>

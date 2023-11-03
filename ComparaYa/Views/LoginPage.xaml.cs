@@ -11,12 +11,16 @@ using Xamarin.Forms.Xaml;
 using Java.Util.Prefs;
 using Android.Preferences;
 using Acr.UserDialogs;
+using Xamarin.CommunityToolkit.UI.Views;
 
 namespace ComparaYa
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+       
+        
+
         public string ApiKey = "AIzaSyAjgxZOgtQq3PwwHuwIE7MEu05KUIgW4zQ";
         public LoginPage()
         {
@@ -35,7 +39,8 @@ namespace ComparaYa
        
             try
             {
-                UserDialogs.Instance.ShowLoading("Cargando...");
+                backdark.IsVisible = true;
+               backdark.IsVisible = load.IsVisible = true;   
                 await Task.Delay(1000);
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(email.Text, passw.Text);
@@ -47,6 +52,9 @@ namespace ComparaYa
                
                 await Navigation.PushAsync(new MainTabs());
                 UserDialogs.Instance.HideLoading();
+                backdark.Opacity = 0;
+                backdark.IsVisible = load.IsVisible = false;
+                backdark.IsVisible = false;
                 email.Text = "";
                 passw.Text = "";
 
@@ -55,6 +63,8 @@ namespace ComparaYa
             catch (Exception )
             {
                 UserDialogs.Instance.HideLoading();
+                backdark.IsVisible = load.IsVisible = false;
+                backdark.IsVisible = false;
                 await DisplayAlert("Error", "Usuario o contraseña incorrectos", "ok");
                
             }
