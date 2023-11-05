@@ -33,7 +33,7 @@ namespace ComparaYa
         {
             base.OnAppearing();
            await showTotal();
-        
+            totalCompra();
             NotifyPropertyChanged();
             
         }
@@ -56,30 +56,50 @@ namespace ComparaYa
 
         private void totalCompra()
         {
-            float totalAmount = 0;
+            float totalAmountExito = 0;
+            float totalAmountD1 = 0;
+            float totalAmountOlimpica = 0;
 
-            // Verifica si App.Carrito tiene elementos antes de entrar al bucle
             if (App.Carrito != null && App.Carrito.Count > 0)
             {
                 foreach (Product item in App.Carrito)
                 {
                     
-                 
+                    string precioExito = item.precio_exito.Trim();
+                    string precioD1 = item.precio_d1.Trim();
+                    string precioOlimpica= item.precio_olim.Trim();
 
-                    // Convierte el string a un float usando una CultureInfo que espera una coma como separador decimal
-                    float precio = float.Parse(item.precio_exito);
-                    int cantidad = int.Parse(item.cantidad);
-                    totalAmount += precio * cantidad;
-
+                    if (float.TryParse(precioExito, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioE))
+                    {
+    
+                        int cantidadE = int.Parse(item.cantidad);
+                        totalAmountExito += precioE * cantidadE;
+                    }else if(float.TryParse(precioD1, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioD))
+                    {
+                        int cantidadD = int.Parse(item.cantidad);
+                        totalAmountD1 += precioD * cantidadD;
+                    }
+                    else if (float.TryParse(precioOlimpica, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioO))
+                    {
+                        int cantidadO = int.Parse(item.cantidad);
+                        totalAmountD1 += precioO * cantidadO;
+                    }
+                    else
+                    {
+                        
+                        Console.WriteLine("Failed to parse precio_exito: " + precioExito);
+                    }
                 }
+
             }
-            else
-            {
-                Console.WriteLine("El carrito está vacío.");
-            }
+            totalExito.Text = totalAmountExito.ToString("F3");
+            totald1.Text = totalAmountD1.ToString("F3"); 
+            totalOlimpica.Text = totalAmountOlimpica.ToString("F3"); 
+            float suma = totalAmountExito + totalAmountD1 + totalAmountOlimpica;
+            neto.Text = suma.ToString("F3");
 
             NotifyPropertyChanged();
-            totalExito.Text = totalAmount.ToString();
+          
         }
 
 

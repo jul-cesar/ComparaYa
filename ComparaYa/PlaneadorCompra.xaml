@@ -249,8 +249,7 @@
                     <Label
                         x:Name="totalExito"
                         FontFamily="PP"
-                        FontSize="17"
-                        Text="9000" />
+                        FontSize="17" />
                 </FlexLayout>
 
 
@@ -268,8 +267,7 @@
                         x:Name="totald1"
                         FontFamily="PP"
                         FontSize="17"
-                        HorizontalTextAlignment="Start"
-                        Text="3200" />
+                        HorizontalTextAlignment="Start" />
                 </FlexLayout>
 
                 <FlexLayout
@@ -286,8 +284,7 @@
                         x:Name="totalOlimpica"
                         FontFamily="PP"
                         FontSize="17"
-                        HorizontalTextAlignment="Start"
-                        Text="4200" />
+                        HorizontalTextAlignment="Start" />
                 </FlexLayout>
 
 
@@ -307,10 +304,10 @@
                         Text="TOTAL:"
                         TextColor="Black" />
                     <Label
+                        x:Name="neto"
                         FontFamily="PP"
                         FontSize="17"
                         HorizontalTextAlignment="Start"
-                        Text="4200"
                         VerticalTextAlignment="Center" />
                 </FlexLayout>
 
