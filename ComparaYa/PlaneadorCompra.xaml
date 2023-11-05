@@ -9,16 +9,29 @@
     <ContentPage.IconImageSource>
         <FileImageSource File="buy.png" />
     </ContentPage.IconImageSource>
-    <StackLayout>
-        <Label
-            x:Name="carText"
-            Margin="12"
-            Padding="5"
-            FontFamily="PPI"
-            FontSize="22"
-            HorizontalTextAlignment="Center"
-            TextColor="Black" />
-        <CollectionView ItemsSource="{x:Static local:App.Carrito}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=" 40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout
+            Grid.Row="0"
+            Margin="10"
+            VerticalOptions="CenterAndExpand">
+            <Label
+                x:Name="carText"
+                FontFamily="PPI"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                TextColor="Black"
+                VerticalTextAlignment="Center" />
+        </StackLayout>
+        <CollectionView
+            Grid.Row="1"
+            Margin="25,0,25,25"
+            ItemsSource="{x:Static local:App.Carrito}">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="CenterAndExpand">
                     <lottie:AnimationView
@@ -38,10 +51,11 @@
                         TextColor="DimGray" />
                 </StackLayout>
             </CollectionView.EmptyView>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <FlexLayout
-                        Padding="4"
+                        Padding="3"
                         AlignItems="Center"
                         BackgroundColor="Transparent"
                         Direction="Row"
@@ -151,7 +165,7 @@
 
 
                                     <Button
-                                        Margin="5"
+                                        Margin="2"
                                         BackgroundColor="White"
                                         BorderColor="Gray"
                                         BorderWidth="1"
@@ -163,7 +177,7 @@
                                         WidthRequest="30" />
                                     <Button
                                         x:Name="cantidad"
-                                        Margin="5"
+                                        Margin="2"
                                         BackgroundColor="White"
                                         BorderColor="Gray"
                                         BorderWidth="1"
@@ -174,7 +188,7 @@
                                         WidthRequest="40" />
 
                                     <Button
-                                        Margin="5"
+                                        Margin="2"
                                         BackgroundColor="White"
                                         BorderColor="Gray"
                                         BorderWidth="1"
@@ -206,5 +220,104 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </StackLayout>
+
+        <Frame
+            x:Name="totales"
+            Grid.Row="2"
+            Margin="30,0,30,10"
+            Padding="8"
+            BackgroundColor="#f4f4f4"
+            CornerRadius="20"
+            IsVisible="false">
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                <Label
+                    FontFamily="PPI"
+                    FontSize="18"
+                    HorizontalTextAlignment="Center"
+                    Text="Montos totales"
+                    TextColor="Black" />
+                <FlexLayout
+                    AlignItems="Center"
+                    Direction="Row"
+                    JustifyContent="SpaceBetween">
+                    <Label
+                        x:Name="exitoLabel"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        HorizontalTextAlignment="Start"
+                        Text="Total Exito: " />
+                    <Label
+                        x:Name="totalExito"
+                        FontFamily="PP"
+                        FontSize="17"
+                        Text="9000" />
+                </FlexLayout>
+
+
+                <FlexLayout
+                    AlignItems="Center"
+                    Direction="Row"
+                    JustifyContent="SpaceBetween">
+                    <Label
+                        x:Name="d1Label"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        HorizontalTextAlignment="Start"
+                        Text="Total D1: " />
+                    <Label
+                        x:Name="totald1"
+                        FontFamily="PP"
+                        FontSize="17"
+                        HorizontalTextAlignment="Start"
+                        Text="3200" />
+                </FlexLayout>
+
+                <FlexLayout
+                    AlignItems="Center"
+                    Direction="Row"
+                    JustifyContent="SpaceBetween">
+                    <Label
+                        x:Name="olimpicaLabel"
+                        FontAttributes="Bold"
+                        FontSize="17"
+                        HorizontalTextAlignment="Start"
+                        Text="Total Olimpica: " />
+                    <Label
+                        x:Name="totalOlimpica"
+                        FontFamily="PP"
+                        FontSize="17"
+                        HorizontalTextAlignment="Start"
+                        Text="4200" />
+                </FlexLayout>
+
+
+
+                <BoxView
+                    Margin="0,5"
+                    BackgroundColor="Black"
+                    HeightRequest="1"
+                    HorizontalOptions="FillAndExpand" />
+                <FlexLayout
+                    Direction="Row"
+                    HorizontalOptions="FillAndExpand"
+                    JustifyContent="SpaceBetween">
+                    <Label
+                        FontFamily="PPI"
+                        FontSize="22"
+                        Text="TOTAL:"
+                        TextColor="Black" />
+                    <Label
+                        FontFamily="PP"
+                        FontSize="17"
+                        HorizontalTextAlignment="Start"
+                        Text="4200"
+                        VerticalTextAlignment="Center" />
+                </FlexLayout>
+
+
+            </StackLayout>
+        </Frame>
+
+
+    </Grid>
 </ContentPage>

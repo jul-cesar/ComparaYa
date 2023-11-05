@@ -16,7 +16,7 @@ namespace ComparaYa.Models
         public string precio_exito { get; set; }
         public int categoria_id { get; set; }
 
-        private string _cantidad = "0";
+        private string _cantidad = "1";
         public string cantidad
         {
             get { return _cantidad; }
