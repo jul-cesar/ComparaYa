@@ -209,22 +209,21 @@ namespace ComparaYa
         }
 
 
-        private async void cvPro_SelectionChanged(object sender, SelectionChangedEventArgs e)
+       
+        public async Task imgModal(Product img)
         {
-            var item = (Product)e.CurrentSelection.FirstOrDefault();
-            if (item != null)
-            {
-                await Navigation.PushAsync(new ComparationPage(item));
 
-          
-                var collectionView = (CollectionView)sender;
-                collectionView.SelectedItem = null;
-            }
+            await Navigation.ShowPopupAsync(new ImgModal(img.imagen_url));
 
         }
 
 
-
+        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            var button = (Image)sender;
+            var item = (Product)button.BindingContext;
+            await imgModal(item);
+        }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -274,6 +273,26 @@ namespace ComparaYa
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        }
+
+        private async void xd_Clicked(object sender, EventArgs e)
+        {
+            backdark.IsVisible = true;
+            backdark.IsVisible = load.IsVisible = true;
+            await Task.Delay(1000);
+            await Task.Delay(1000);
+            var boton = (AnimationView)sender;
+            var item = (Product)boton.BindingContext;
+                if (item != null)
+            {
+
+                await Navigation.PushAsync(new ComparationPage(item));
+                UserDialogs.Instance.HideLoading();
+             
+                backdark.IsVisible = load.IsVisible = false;
+                backdark.IsVisible = false;
+
+            }
         }
     }
 }

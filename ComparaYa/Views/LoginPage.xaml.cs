@@ -51,7 +51,7 @@ namespace ComparaYa
                
                
                 await Navigation.PushAsync(new MainTabs());
-                UserDialogs.Instance.HideLoading();
+               
                 backdark.Opacity = 0;
                 backdark.IsVisible = load.IsVisible = false;
                 backdark.IsVisible = false;

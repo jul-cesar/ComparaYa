@@ -76,7 +76,7 @@ namespace ComparaYa
         private async void LogoutButton_Clicked(object sender, EventArgs e)
         {
             Xamarin.Essentials.Preferences.Remove("firebaseRefreshToken");
-           await Navigation.PushAsync(new LoginPage());
+           await Navigation.PushAsync(new WelcomePage());
         }
     }
 }

@@ -174,7 +174,7 @@
                                         HeightRequest="20"
                                         HorizontalOptions="Center"
                                         Text="+"
-                                        WidthRequest="30" />
+                                        WidthRequest="34" />
                                     <Button
                                         x:Name="cantidad"
                                         Margin="2"
@@ -211,7 +211,7 @@
                                         RepeatCount="2"
                                         RepeatMode="Restart"
                                         VerticalOptions="EndAndExpand"
-                                        WidthRequest="60" />
+                                        WidthRequest="70" />
                                 </StackLayout>
 
                             </Grid>

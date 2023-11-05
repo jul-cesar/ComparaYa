@@ -54,16 +54,7 @@ namespace ComparaYa
 
 
 
-            if (EqualsProducts.Count > 1)
-            {
-                eq.Text = $"Se han encontrado {EqualsProducts.Count.ToString()} productos parecidos";
-               
-            }
-            else
-            {
-                eq.Text = "Este producto no se ha encontrado en otras distribuidoras";
-               
-            }
+          
             this.BindingContext = this;
         }
 
