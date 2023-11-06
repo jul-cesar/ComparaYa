@@ -74,20 +74,20 @@ namespace ComparaYa
     
                         int cantidadE = int.Parse(item.cantidad);
                         totalAmountExito += precioE * cantidadE;
-                    }else if(float.TryParse(precioD1, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioD))
+                    }if(float.TryParse(precioD1, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioD))
                     {
                         int cantidadD = int.Parse(item.cantidad);
                         totalAmountD1 += precioD * cantidadD;
                     }
-                    else if (float.TryParse(precioOlimpica, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioO))
+                    if (float.TryParse(precioOlimpica, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioO))
                     {
                         int cantidadO = int.Parse(item.cantidad);
-                        totalAmountD1 += precioO * cantidadO;
+                        totalAmountOlimpica += precioO * cantidadO;
                     }
                     else
                     {
                         
-                        Console.WriteLine("Failed to parse precio_exito: " + precioExito);
+                        Console.WriteLine("Failed to parse precio_exito: " + precioExito, precioD1, precioOlimpica);
                     }
                 }
 
