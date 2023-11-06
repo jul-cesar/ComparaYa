@@ -247,6 +247,7 @@
                             x:Name="addAni"
                             Animation="addAni.json"
                             AutoPlay="True"
+                            Clicked="addAni_Clicked_1"
                             HeightRequest="50"
                             HorizontalOptions="FillAndExpand"
                             RepeatCount="3"

@@ -1,4 +1,6 @@
-﻿using ComparaYa.Models;
+﻿using Acr.UserDialogs;
+using ComparaYa.Models;
+using Lottie.Forms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.CommunityToolkit.Converters;
+using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -77,21 +80,45 @@ namespace ComparaYa
 
         }
 
-
-       /* public async Task<ObservableCollection<Product>> ApiCall()
+        private async Task addAni_Clicked(object sender, EventArgs e)
         {
-            try
+          
+        }
+
+        private async void addAni_Clicked_1(object sender, EventArgs e)
+        {
+            var button = (AnimationView)sender;
+            var item = (Product)button.BindingContext;
+            if (App.Carrito.Contains(item))
             {
-                AlikeProducts = await ProductsFilters.FiltrarProductosSimilares(App.ProductosCollection, prod);
-                NotifyPropertyChanged(nameof(AlikeProducts));
-                _isDataLoaded = true;
+                await this.DisplayToastAsync("Este producto ya se encuentra en el carrito");
             }
-            catch (Exception ex)
+            else
             {
-                // Handle or log exception
-                Console.WriteLine(ex.Message);
+                App.Carrito.Add(item);
+                UserDialogs.Instance.Toast("Producto agregado al carrito");
+                NotifyPropertyChanged();
             }
-            return AlikeProducts;
-        } */
+
+
+            await Task.Delay(1000);
+        }
+
+
+        /* public async Task<ObservableCollection<Product>> ApiCall()
+         {
+             try
+             {
+                 AlikeProducts = await ProductsFilters.FiltrarProductosSimilares(App.ProductosCollection, prod);
+                 NotifyPropertyChanged(nameof(AlikeProducts));
+                 _isDataLoaded = true;
+             }
+             catch (Exception ex)
+             {
+                 // Handle or log exception
+                 Console.WriteLine(ex.Message);
+             }
+             return AlikeProducts;
+         } */
     }
 }
