@@ -6,129 +6,128 @@
     xmlns:local="clr-namespace:ComparaYa"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     Size="450,550">
-    <CollectionView
-        x:Name="cvPro"
-        Grid.Row="3"
-        BackgroundColor="Transparent"
-        ItemsSource="{x:Static local:App.Favorites}">
-        <CollectionView.ItemsLayout>
-            <GridItemsLayout
-                HorizontalItemSpacing="20"
-                Orientation="Vertical"
-                Span="2"
-                VerticalItemSpacing="20" />
-        </CollectionView.ItemsLayout>
-        <CollectionView.Footer>
-            <ActivityIndicator
-                x:Name="loadMoreActivityIndicator"
-                HorizontalOptions="Center"
-                IsRunning="False"
-                VerticalOptions="Center"
-                Color="Blue" />
-        </CollectionView.Footer>
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <StackLayout
-                    BackgroundColor="Transparent"
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Horizontal"
-                    VerticalOptions="CenterAndExpand">
-                    <Frame
-                        Margin="4"
-                        Padding="12"
-                        BackgroundColor="White"
-                        CornerRadius="9">
-                        <StackLayout VerticalOptions="FillAndExpand">
-
-                            <Image
-                                Aspect="AspectFill"
-                                BackgroundColor="Transparent"
-                                HeightRequest="170"
-                                Source="{Binding imagen_url}"
-                                VerticalOptions="CenterAndExpand"
-                                WidthRequest="120" />
-                            <StackLayout VerticalOptions="FillAndExpand">
-                                <Label
-                                    FontFamily="PP"
-                                    FontSize="14"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding nombre}"
-                                    TextColor="#4A4A4A" />
-                                <Label
-                                    x:Name="priced1"
-                                    FontSize="14"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center">
-                                    <Label.Text>
-                                        <Binding Path="precio_d1" StringFormat="Precio D1: {0}" />
-                                    </Label.Text>
-                                    <Label.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding precio_d1}"
-                                            TargetType="Label"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                                <Label
-                                    x:Name="priceolim"
-                                    FontSize="14"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center">
-                                    <Label.Text>
-                                        <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
-                                    </Label.Text>
-                                    <Label.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding precio_olim}"
-                                            TargetType="Label"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-
-                                <Label
-                                    x:Name="priceexito"
-                                    FontFamily="PPI"
-                                    FontSize="15"
-                                    HorizontalOptions="CenterAndExpand"
-                                    TextColor="Black"
-                                    VerticalOptions="End"
-                                    VerticalTextAlignment="Center">
-                                    <Label.Text>
-                                        <Binding Path="precio_exito" StringFormat="Exito: {0}" />
-                                    </Label.Text>
-                                    <Label.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding precio_exito}"
-                                            TargetType="Label"
-                                            Value="0">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                            </StackLayout>
-
-                        </StackLayout>
-
-                    </Frame>
-                    <FlexLayout
-                        AlignItems="Center"
-                        Direction="Row"
-                        JustifyContent="Center">
-
+    <StackLayout>
+        <Label
+            Margin="4"
+            Padding="5"
+            FontFamily="PPI"
+            FontSize="14"
+            HorizontalTextAlignment="Center"
+            Text="Mis favoritos" />
+        <CollectionView
+            x:Name="cvPro"
+            Grid.Row="3"
+            BackgroundColor="Transparent"
+            ItemsSource="{x:Static local:App.Favorites}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="20"
+                    Orientation="Vertical"
+                    Span="2"
+                    VerticalItemSpacing="20" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.Footer>
+                <ActivityIndicator
+                    x:Name="loadMoreActivityIndicator"
+                    HorizontalOptions="Center"
+                    IsRunning="False"
+                    VerticalOptions="Center"
+                    Color="Blue" />
+            </CollectionView.Footer>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout BackgroundColor="Transparent" HorizontalOptions="CenterAndExpand">
                         <Image
                             Aspect="AspectFill"
-                            HeightRequest="40"
+                            BackgroundColor="Transparent"
+                            HeightRequest="170"
+                            Source="{Binding imagen_url}"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="120" />
+                        <Frame
+                            Margin="4"
+                            Padding="12"
+                            BackgroundColor="White"
+                            CornerRadius="9"
                             HorizontalOptions="FillAndExpand"
-                            Source="nofav.png"
-                            VerticalOptions="FillAndExpand"
-                            WidthRequest="40" />
-                    </FlexLayout>
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                            WidthRequest="300">
+                            <StackLayout VerticalOptions="FillAndExpand">
+
+
+                                <StackLayout VerticalOptions="FillAndExpand">
+                                    <Label
+                                        FontFamily="PP"
+                                        FontSize="14"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding nombre}"
+                                        TextColor="#4A4A4A" />
+                                    <Label
+                                        x:Name="priced1"
+                                        FontSize="14"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center">
+                                        <Label.Text>
+                                            <Binding Path="precio_d1" StringFormat="Precio D1: {0}" />
+                                        </Label.Text>
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding precio_d1}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <Label
+                                        x:Name="priceolim"
+                                        FontSize="14"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center">
+                                        <Label.Text>
+                                            <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
+                                        </Label.Text>
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding precio_olim}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+
+                                    <Label
+                                        x:Name="priceexito"
+                                        FontFamily="PPI"
+                                        FontSize="15"
+                                        HorizontalOptions="CenterAndExpand"
+                                        TextColor="Black"
+                                        VerticalOptions="End"
+                                        VerticalTextAlignment="Center">
+                                        <Label.Text>
+                                            <Binding Path="precio_exito" StringFormat="Exito: {0}" />
+                                        </Label.Text>
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding precio_exito}"
+                                                TargetType="Label"
+                                                Value="0">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </StackLayout>
+
+                            </StackLayout>
+
+                        </Frame>
+                        <FlexLayout
+                            AlignItems="Center"
+                            Direction="Row"
+                            JustifyContent="Center" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
 </xct:Popup>
