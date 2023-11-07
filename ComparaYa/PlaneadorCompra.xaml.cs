@@ -105,7 +105,7 @@ namespace ComparaYa
 
 
 
-        private void delete_Clicked(object sender, EventArgs e)
+        private async void delete_Clicked(object sender, EventArgs e)
         {
             var botonxd = (AnimationView)sender;
             var itemxd = (Product)botonxd.BindingContext;
@@ -113,9 +113,9 @@ namespace ComparaYa
             App.Carrito.Where(p => p != itemxd);
             NotifyPropertyChanged();
             showTotal();
+            totalCompra();
+
         }
-
-
         public async Task imgModal(Product img)
         {
 
@@ -139,7 +139,7 @@ namespace ComparaYa
 
         }
 
-        private  void Button_Clicked(object sender, EventArgs e)
+        private  async void Button_Clicked(object sender, EventArgs e)
         {
             var button = (Button)sender;
             var item = (Product)button.BindingContext;
@@ -150,7 +150,7 @@ namespace ComparaYa
                     item.cantidad = cantidadNumerica.ToString();
                 }
                     totalCompra();
-                showTotal();
+               await showTotal();
                 NotifyPropertyChanged();
 
               
@@ -158,7 +158,7 @@ namespace ComparaYa
             }
         }
 
-        private  void Button_Clicked_1(object sender, EventArgs e)     
+        private async  void Button_Clicked_1(object sender, EventArgs e)     
         {
             var button = (Button)sender;
             var item = (Product)button.BindingContext;
@@ -169,7 +169,7 @@ namespace ComparaYa
 
             }
             totalCompra();
-            showTotal();
+          await  showTotal();
             NotifyPropertyChanged();
 
         }

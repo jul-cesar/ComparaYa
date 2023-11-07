@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.CommunityToolkit.Extensions;
 
 namespace ComparaYa
 {
@@ -77,6 +78,12 @@ namespace ComparaYa
         {
             Xamarin.Essentials.Preferences.Remove("firebaseRefreshToken");
            await Navigation.PushAsync(new WelcomePage());
+        }
+
+
+        private async void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await Navigation.ShowPopupAsync(new ModalFavorites());
         }
     }
 }

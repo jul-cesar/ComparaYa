@@ -15,7 +15,7 @@ namespace ComparaYa.Models
         public string precio_olim { get; set; }
         public string precio_exito { get; set; }
         public int categoria_id { get; set; }
-
+        public bool isFavorite { get; set; }
         private string _cantidad = "1";
         public string cantidad
         {
@@ -26,6 +26,8 @@ namespace ComparaYa.Models
                 NotifyPropertyChanged();
             }
         }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

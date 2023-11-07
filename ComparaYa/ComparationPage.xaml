@@ -129,6 +129,8 @@
                                 VerticalOptions="Fill"
                                 WidthRequest="30" />
 
+
+
                         </StackLayout>
                     </Frame>
                 </DataTemplate>
@@ -243,19 +245,29 @@
                             </StackLayout>
 
                         </Frame>
-
-                        <lottie:AnimationView
-                            x:Name="addAni"
-                            Animation="addAni.json"
-                            AutoPlay="True"
-                            Clicked="addAni_Clicked_1"
-                            HeightRequest="50"
-                            HorizontalOptions="FillAndExpand"
-                            RepeatCount="3"
-                            RepeatMode="Infinite"
-                            VerticalOptions="Fill"
-                            WidthRequest="30" />
-
+                        <StackLayout Orientation="Horizontal">
+                            <lottie:AnimationView
+                                x:Name="addAni"
+                                Animation="addAni.json"
+                                AutoPlay="True"
+                                Clicked="addAni_Clicked_1"
+                                HeightRequest="80"
+                                HorizontalOptions="EndAndExpand"
+                                RepeatCount="3"
+                                RepeatMode="Infinite"
+                                VerticalOptions="Fill"
+                                WidthRequest="60" />
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="40"
+                                HorizontalOptions="StartAndExpand"
+                                Source="nofav.png"
+                                WidthRequest="40">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

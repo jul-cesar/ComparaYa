@@ -33,7 +33,13 @@
 
                 </StackLayout>
             </Frame>
-
+            <Button
+                BackgroundColor="White"
+                BorderColor="Gray"
+                BorderWidth="1"
+                Clicked="Button_Clicked_1"
+                CornerRadius="20"
+                Text="Mis favoritos" />
             <StackLayout VerticalOptions="EndAndExpand">
                 <Button
                     x:Name="logoutButton"

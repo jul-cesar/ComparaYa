@@ -31,12 +31,12 @@ namespace ComparaYa
         bool isFilteredApplied;
         private List<Product> filteredTips;
         private readonly HttpClient _cliente = new HttpClient();
-
+        bool isFavorite = false;
 
         public ProductsView()
         {
             InitializeComponent();
-
+            BindingContext = this;
 
 
         }
@@ -293,6 +293,44 @@ namespace ComparaYa
                 backdark.IsVisible = false;
 
             }
+        }
+
+        private void AnimationView_Clicked_1(object sender, EventArgs e)
+        {
+            if (sender is Lottie.Forms.AnimationView animationView)
+            {
+             
+                if (animationView.IsAnimating)
+                {
+                    animationView.PauseAnimation();
+                }
+                else
+                {
+                    animationView.PlayAnimation();
+                }
+            }
+    }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var button = (Image)sender;
+            var item = (Product)button.BindingContext;
+            item.isFavorite = !item.isFavorite;
+            if (item.isFavorite)
+            {
+                button.Source = "sifav.png";
+                App.Favorites.Add(item);
+                UserDialogs.Instance.Toast("Producto agregado a favoritos");
+                NotifyPropertyChanged();
+            }
+            else
+            {
+                button.Source = "nofav.png";
+                App.Favorites.Remove(item);
+                UserDialogs.Instance.Toast("Producto eliminado de favoritos");
+                NotifyPropertyChanged();
+            }
+
         }
     }
 }

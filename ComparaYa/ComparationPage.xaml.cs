@@ -22,7 +22,7 @@ namespace ComparaYa
 	{
         private bool _hasCalledAPI = false;
         private bool _isDataLoaded = false;
-
+        bool isFav = false;
         public ObservableCollection<Product> EqualsProducts { get; set; }
 
         public ObservableCollection<Product> AlikeProducts { get; set; }
@@ -80,10 +80,7 @@ namespace ComparaYa
 
         }
 
-        private async Task addAni_Clicked(object sender, EventArgs e)
-        {
-          
-        }
+       
 
         private async void addAni_Clicked_1(object sender, EventArgs e)
         {
@@ -102,6 +99,29 @@ namespace ComparaYa
 
 
             await Task.Delay(1000);
+        }
+
+        
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+
+            var button = (Image)sender;
+            var item = (Product)button.BindingContext;
+            item.isFavorite = !item.isFavorite;
+            if (item.isFavorite)
+            {
+                button.Source = "sifav.png";
+                App.Favorites.Add(item);
+                UserDialogs.Instance.Toast("Producto agregado a favoritos");
+                NotifyPropertyChanged();
+            }
+            else
+            {
+                button.Source = "nofav.png";
+                App.Favorites.Remove(item);
+                UserDialogs.Instance.Toast("Producto eliminado de favoritos");
+                NotifyPropertyChanged();
+            }
         }
 
 

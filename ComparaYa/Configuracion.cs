@@ -6,7 +6,7 @@
         {
         #if PHYSICAL_DEVICE
             
-            return "192.168.101.6";
+            return "192.168.1.24";
         #else
 
             return "10.0.2.2";

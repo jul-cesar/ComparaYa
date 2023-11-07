@@ -227,6 +227,17 @@
                                     VerticalOptions="Fill"
                                     WidthRequest="60" />
 
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="40"
+                                    HorizontalOptions="FillAndExpand"
+                                    Source="nofav.png"
+                                    VerticalOptions="FillAndExpand"
+                                    WidthRequest="40">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </FlexLayout>
                         </StackLayout>
                     </DataTemplate>
