@@ -36,7 +36,7 @@ namespace ComparaYa
          public async Task RegistrarUserDB(string name, string correo, string pass)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/usuarios");  
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/usuarios/");  
             request.Method = HttpMethod.Post;  
 
 
@@ -46,6 +46,12 @@ namespace ComparaYa
 
             var cliente = new HttpClient();
             HttpResponseMessage response = await cliente.SendAsync(request);
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error registering user: {errorMessage}");
+                // Handle the error
+            }
         }
 
         async private void Registrar(object sender, EventArgs e)
@@ -59,10 +65,10 @@ namespace ComparaYa
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(user.Text, pass.Text);
                 string gettoken = auth.FirebaseToken;
-             
-                await RegistrarUserDB(name.Text,user.Text, pass.Text);
-                
-              
+
+                await RegistrarUserDB(name.Text, user.Text, pass.Text);
+                Console.WriteLine(name.Text, user.Text, pass.Text);
+
                 UserDialogs.Instance.HideLoading();
                 backdark.Opacity = 0;
                 backdark.IsVisible = load.IsVisible = false;

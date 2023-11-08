@@ -70,9 +70,11 @@
                                             TextColor="#4A4A4A" />
                                         <Label
                                             x:Name="priced1"
+                                            FontFamily="PPI"
                                             FontSize="14"
                                             HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                            HorizontalTextAlignment="Center"
+                                            TextColor="Black">
                                             <Label.Text>
                                                 <Binding Path="precio_d1" StringFormat="Precio D1: {0}" />
                                             </Label.Text>
@@ -87,9 +89,11 @@
                                         </Label>
                                         <Label
                                             x:Name="priceolim"
+                                            FontFamily="PPI"
                                             FontSize="14"
                                             HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                            HorizontalTextAlignment="Center"
+                                            TextColor="Black">
                                             <Label.Text>
                                                 <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
                                             </Label.Text>
@@ -106,7 +110,7 @@
                                         <Label
                                             x:Name="priceexito"
                                             FontFamily="PPI"
-                                            FontSize="15"
+                                            FontSize="14"
                                             HorizontalOptions="CenterAndExpand"
                                             TextColor="Black"
                                             VerticalOptions="End"
@@ -193,15 +197,16 @@
                                     <StackLayout VerticalOptions="FillAndExpand">
                                         <Label
                                             FontFamily="PP"
-                                            FontSize="14"
                                             HorizontalTextAlignment="Center"
                                             Text="{Binding nombre}"
                                             TextColor="#4A4A4A" />
                                         <Label
                                             x:Name="priced1"
+                                            FontFamily="PPI"
                                             FontSize="14"
                                             HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                            HorizontalTextAlignment="Center"
+                                            TextColor="Black">
                                             <Label.Text>
                                                 <Binding Path="precio_d1" StringFormat="Precio D1: {0}" />
                                             </Label.Text>
@@ -216,9 +221,11 @@
                                         </Label>
                                         <Label
                                             x:Name="priceolim"
+                                            FontFamily="PPI"
                                             FontSize="14"
                                             HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                            HorizontalTextAlignment="Center"
+                                            TextColor="Black">
                                             <Label.Text>
                                                 <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
                                             </Label.Text>
@@ -235,7 +242,7 @@
                                         <Label
                                             x:Name="priceexito"
                                             FontFamily="PPI"
-                                            FontSize="15"
+                                            FontSize="14"
                                             HorizontalOptions="CenterAndExpand"
                                             TextColor="Black"
                                             VerticalOptions="End"
@@ -273,7 +280,7 @@
                                     Aspect="AspectFit"
                                     HeightRequest="40"
                                     HorizontalOptions="StartAndExpand"
-                                    Source="nofav.png"
+                                    Source="{Binding FavoriteIcon}"
                                     WidthRequest="40">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />

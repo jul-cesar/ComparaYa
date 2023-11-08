@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ComparaYa"
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-    Size="450,550">
+    Size="400,550">
     <StackLayout>
         <Label
             Margin="4"
