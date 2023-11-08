@@ -108,20 +108,26 @@ namespace ComparaYa
             var button = (Image)sender;
             var item = (Product)button.BindingContext;
             item.isFavorite = !item.isFavorite;
+
+            item.FavoriteIcon = item.isFavorite ? "sifav.png" : "nofav.png";
+
             if (item.isFavorite)
             {
-                button.Source = "sifav.png";
                 App.Favorites.Add(item);
                 UserDialogs.Instance.Toast("Producto agregado a favoritos");
-                NotifyPropertyChanged();
             }
             else
             {
-                button.Source = "nofav.png";
                 App.Favorites.Remove(item);
                 UserDialogs.Instance.Toast("Producto eliminado de favoritos");
-                NotifyPropertyChanged();
             }
+
+            NotifyPropertyChanged();
+        }
+
+        private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new PlaneadorCompra());
         }
 
 

@@ -38,7 +38,7 @@ namespace ComparaYa
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/usuarionombre/{email}"),
+                RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/usuarionombre/{email}"),
                 Method = HttpMethod.Get,
             };
             request.Headers.Add("Accept", "application/json");

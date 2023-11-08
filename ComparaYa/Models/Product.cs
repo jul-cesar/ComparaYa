@@ -15,7 +15,32 @@ namespace ComparaYa.Models
         public string precio_olim { get; set; }
         public string precio_exito { get; set; }
         public int categoria_id { get; set; }
-        public bool isFavorite { get; set; }
+        public bool isFavorite;
+        public bool IsFavorite
+        {
+            get => isFavorite;
+            set
+            {
+                if (isFavorite != value)
+                {
+                    isFavorite = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+        private string _favoriteIcon = "nofav.png";
+        public string FavoriteIcon
+        {
+            get => _favoriteIcon;
+            set
+            {
+                if (_favoriteIcon != value)
+                {
+                    _favoriteIcon = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
         private string _cantidad = "1";
         public string cantidad
         {

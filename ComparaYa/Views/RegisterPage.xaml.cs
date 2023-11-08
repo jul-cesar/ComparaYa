@@ -36,7 +36,7 @@ namespace ComparaYa
          public async Task RegistrarUserDB(string name, string correo, string pass)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/usuarios/");  
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/usuarios");  
             request.Method = HttpMethod.Post;  
 
 

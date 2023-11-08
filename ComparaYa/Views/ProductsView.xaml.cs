@@ -17,6 +17,7 @@ using Acr.UserDialogs;
 using Lottie.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace ComparaYa
 {
@@ -27,11 +28,14 @@ namespace ComparaYa
         public decimal ipPcCelu;
         int currentPage = 1;
         int limit = 16;
+       
         bool isLoading = false;
-        bool isFilteredApplied;
+        private bool isRefreshing;
         private List<Product> filteredTips;
         private readonly HttpClient _cliente = new HttpClient();
         bool isFavorite = false;
+        private int? currentCategoryId = null;
+
 
         public ProductsView()
         {
@@ -47,7 +51,8 @@ namespace ComparaYa
         {
             base.OnAppearing();
 
-
+            currentCategoryId = null;
+            currentPage = 1;
             if (App.ProductosCollection.Count == 0 || App.ProductosCollection == null)
             {
 
@@ -78,14 +83,27 @@ namespace ComparaYa
 
         public async Task LoadMoreItems()
         {
-            
-            if(isLoading) return;   
+
+            if (isLoading || currentCategoryId == null) return;
+
             isLoading = true;
             loadMoreActivityIndicator.IsRunning = true;
+
             try
             {
+                string requestUri;
+                if (currentCategoryId.HasValue)
+                {
+                   
+                    requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentCategoryId.Value}/{currentPage}/{limit}";
+                }
+                else
+                {
+                    
+                    requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentPage}/{limit}";
+                }
                 var request = new HttpRequestMessage();
-                request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/productos/{currentPage}/{limit}");
+                request.RequestUri = new Uri($"{requestUri}");
                 request.Method = HttpMethod.Get;
                 request.Headers.Add("Accept", "application/json");
 
@@ -130,7 +148,7 @@ namespace ComparaYa
         {
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/categorias/");
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/categorias");
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
 
@@ -142,7 +160,6 @@ namespace ComparaYa
 
                 var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Categoria>>(contentCat);
 
-                App.ProductosCollection.Clear();
                 foreach (var categoria in resultadoCat)
                 {
                     App.CategoriasCollection.Add(categoria);
@@ -158,7 +175,7 @@ namespace ComparaYa
         {
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/productos/{currentPage}/{limit}");
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos");
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
 
@@ -183,9 +200,10 @@ namespace ComparaYa
         {
             var button = (Button)sender;
             var item = (Categoria)button.BindingContext;
+            currentCategoryId = item.id; 
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"http://{Configuracion.IpServidor}:4000/productos/categoria/{item.id}");
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{item.id}");
             request.Method = HttpMethod.Get;
             request.Headers.Add("Accept", "application/json");
 
@@ -225,8 +243,9 @@ namespace ComparaYa
             await imgModal(item);
         }
 
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
+           
             string searchText = e.NewTextValue;
 
             if (string.IsNullOrWhiteSpace(searchText))
@@ -285,7 +304,7 @@ namespace ComparaYa
             var item = (Product)boton.BindingContext;
                 if (item != null)
             {
-
+                await FetchProductsFromServer();
                 await Navigation.PushAsync(new ComparationPage(item));
                 UserDialogs.Instance.HideLoading();
              
@@ -311,25 +330,30 @@ namespace ComparaYa
             }
     }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        public  void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             var button = (Image)sender;
             var item = (Product)button.BindingContext;
             item.isFavorite = !item.isFavorite;
+
+            item.FavoriteIcon = item.isFavorite ? "sifav.png" : "nofav.png";
+
             if (item.isFavorite)
             {
-                button.Source = "sifav.png";
                 App.Favorites.Add(item);
                 UserDialogs.Instance.Toast("Producto agregado a favoritos");
-                NotifyPropertyChanged();
             }
             else
             {
-                button.Source = "nofav.png";
                 App.Favorites.Remove(item);
                 UserDialogs.Instance.Toast("Producto eliminado de favoritos");
-                NotifyPropertyChanged();
             }
+
+            NotifyPropertyChanged(); // Asegúrate de notificar que la propiedad FavoriteIcon cambió.
+        }
+
+        private void RefreshView_Refreshing(object sender, EventArgs e)
+        {
 
         }
     }

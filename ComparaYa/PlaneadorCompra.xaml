@@ -30,7 +30,7 @@
         </StackLayout>
         <CollectionView
             Grid.Row="1"
-            Margin="25,0,25,25"
+            Margin="15,0,15,15"
             ItemsSource="{x:Static local:App.Carrito}">
             <CollectionView.EmptyView>
                 <StackLayout VerticalOptions="CenterAndExpand">
@@ -55,24 +55,23 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <FlexLayout
-                        Padding="3"
                         AlignItems="Center"
                         BackgroundColor="Transparent"
                         Direction="Row"
                         JustifyContent="SpaceEvenly">
                         <Image
-                            Margin="5"
+                            Margin="3"
                             Aspect="AspectFit"
                             BackgroundColor="Transparent"
                             HeightRequest="200"
                             Source="{Binding imagen_url}"
-                            WidthRequest="250">
+                            WidthRequest="230">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Frame
-                            Margin="10"
+                            Margin="5"
                             BackgroundColor="White"
                             CornerRadius="9"
                             WidthRequest="320">
