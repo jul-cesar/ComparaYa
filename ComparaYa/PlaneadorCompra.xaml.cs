@@ -43,7 +43,7 @@ namespace ComparaYa
             if (App.Carrito.Count > 0)
             {
                 totales.IsVisible = true;
-                carText.Text = "Mi carrito";
+                carText.Text = "Planea tu compra";
                 NotifyPropertyChanged();
             }
             else

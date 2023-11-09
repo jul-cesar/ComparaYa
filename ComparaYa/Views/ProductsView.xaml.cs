@@ -28,7 +28,7 @@ namespace ComparaYa
         public decimal ipPcCelu;
         int currentPage = 1;
         int limit = 16;
-       
+        Categoria selected;
         bool isLoading = false;
         private bool isRefreshing;
         private List<Product> filteredTips;
@@ -196,11 +196,20 @@ namespace ComparaYa
             }
         }
 
+
         private async void Button_Clicked(object sender, EventArgs e)
         {
             var button = (Button)sender;
             var item = (Categoria)button.BindingContext;
-            currentCategoryId = item.id; 
+            currentCategoryId = item.id;
+
+            if (item.id != currentCategoryId)
+            {
+                button.BackgroundColor = Color.Gray;
+            }
+
+
+        
 
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{item.id}");
@@ -356,5 +365,7 @@ namespace ComparaYa
         {
 
         }
+
+       
     }
 }

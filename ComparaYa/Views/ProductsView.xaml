@@ -216,32 +216,30 @@
                                     Animation="addAni.json"
                                     AutoPlay="True"
                                     Clicked="addAni_Clicked"
-                                    HeightRequest="60"
+                                    HeightRequest="55"
                                     HorizontalOptions="FillAndExpand"
                                     RepeatCount="3"
-                                    RepeatMode="Infinite"
                                     VerticalOptions="Fill"
-                                    WidthRequest="60" />
+                                    WidthRequest="55" />
 
                                 <lottie:AnimationView
                                     x:Name="xd"
                                     Animation="lupa2.json"
                                     AutoPlay="True"
                                     Clicked="xd_Clicked"
-                                    HeightRequest="60"
+                                    HeightRequest="55"
                                     HorizontalOptions="FillAndExpand"
                                     RepeatCount="3"
-                                    RepeatMode="Infinite"
                                     VerticalOptions="Fill"
-                                    WidthRequest="60" />
+                                    WidthRequest="55" />
 
                                 <Image
                                     Aspect="AspectFill"
-                                    HeightRequest="40"
+                                    HeightRequest="35"
                                     HorizontalOptions="FillAndExpand"
                                     Source="{Binding FavoriteIcon}"
                                     VerticalOptions="FillAndExpand"
-                                    WidthRequest="40">
+                                    WidthRequest="35">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                                     </Image.GestureRecognizers>

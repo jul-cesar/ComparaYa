@@ -12,7 +12,7 @@ using System.Text;
 
 namespace ComparaYa.Droid
 {
-    [Activity(Label = "ComparaYa", Icon = "@mipmap/icon", Theme = "@style/newone", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize)]
+    [Activity(Label = "ComparaYa", Icon = "@mipmap/ic_launcher", Theme = "@style/newone", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize)]
     public class Splash : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
