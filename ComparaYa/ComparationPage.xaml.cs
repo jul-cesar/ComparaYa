@@ -15,6 +15,8 @@ using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using FuzzySharp;
+
 namespace ComparaYa
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
@@ -39,38 +41,63 @@ namespace ComparaYa
             this.prod = prod;
             palabraProducto = prod.nombre.Split(' ')[0];
             palabrasProducto = prod.nombre.Split(' ');
+            int umbralSimilitud = 67;
 
             EqualsProducts = new ObservableCollection<Product>(
-     App.ProductosCollection.Where(p =>
-     {
-         var palabras = Regex.Replace(p.nombre, @"\W", " ").Split(' ');
-         return p.nombre.Equals(prod.nombre, StringComparison.OrdinalIgnoreCase) ||
-                (palabras.Length >= 3 && palabrasProducto.Length >= 3 &&
-                 palabras.GetValue(0).ToString().Equals(palabrasProducto.GetValue(0).ToString(), StringComparison.OrdinalIgnoreCase) &&
-                 palabras.GetValue(1).ToString().Equals(palabrasProducto.GetValue(1).ToString(), StringComparison.OrdinalIgnoreCase) &&
-                 palabras.GetValue(2).ToString().Equals(palabrasProducto.GetValue(2).ToString(), StringComparison.OrdinalIgnoreCase));
-     })
- );
+            App.ProductosCollection.Where(p =>
+            {
+                var normalizedNombre = NormalizeString(p.nombre);
+                var normalizedProdNombre = NormalizeString(prod.nombre);
+
+                return Fuzz.TokenSortRatio(normalizedNombre, normalizedProdNombre) > 67 ||
+                       Fuzz.TokenSetRatio(normalizedNombre, normalizedProdNombre) > 73 ||
+                       Fuzz.PartialRatio(normalizedNombre, normalizedProdNombre) > 83 ;
+            })
+        );
+
+
             AlikeProducts = new ObservableCollection<Product>(App.ProductosCollection
-               .Where(p => p.nombre.Contains(palabraProducto) && !p.nombre.Equals(prod.nombre))
-               );
+              .Where(p =>
+              {
+                  var normalizedNombre = NormalizeString(p.nombre);
+                  var palabraProductoNormalizada = NormalizeString(palabraProducto);
 
+                  return (Fuzz.PartialRatio(normalizedNombre, palabraProductoNormalizada) > 55||
+                          Fuzz.TokenSortRatio(normalizedNombre, palabraProductoNormalizada) > 60 ||
+                          Fuzz.Ratio(normalizedNombre, palabraProductoNormalizada) > 50) &&
+                          !normalizedNombre.Equals(NormalizeString(prod.nombre));
+              })
+          );
 
-
-          
             this.BindingContext = this;
         }
 
-       /* protected override async void OnAppearing()
-        {
-            base.OnAppearing();
 
-            if (!_hasCalledAPI)
-            {
-                _hasCalledAPI = true;
-                await ApiCall();
-            }
-        } */
+
+        /* protected override async void OnAppearing()
+         {
+             base.OnAppearing();
+
+             if (!_hasCalledAPI)
+             {
+                 _hasCalledAPI = true;
+                 await ApiCall();
+             }
+         } */
+
+        private string NormalizeString(string input)
+        {
+            // Convertir a minúsculas
+            input = input.ToLower();
+
+            // Eliminar caracteres especiales y espacios adicionales
+            // Aquí se puede ajustar la expresión regular según sea necesario
+            input = Regex.Replace(input, @"[^a-z0-9\s]", "");
+
+            // Devolver el string normalizado
+            return input;
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 

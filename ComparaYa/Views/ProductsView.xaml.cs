@@ -18,6 +18,7 @@ using Lottie.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.IO;
+using ComparaYa.localBD;
 
 namespace ComparaYa
 {
@@ -41,7 +42,7 @@ namespace ComparaYa
         {
             InitializeComponent();
             BindingContext = this;
-
+          
 
         }
 
@@ -173,7 +174,7 @@ namespace ComparaYa
 
         protected async Task FetchProductsFromServer()
         {
-
+                
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos");
             request.Method = HttpMethod.Get;
@@ -203,10 +204,7 @@ namespace ComparaYa
             var item = (Categoria)button.BindingContext;
             currentCategoryId = item.id;
 
-            if (item.id != currentCategoryId)
-            {
-                button.BackgroundColor = Color.Gray;
-            }
+           
 
 
         
@@ -346,10 +344,11 @@ namespace ComparaYa
             item.isFavorite = !item.isFavorite;
 
             item.FavoriteIcon = item.isFavorite ? "sifav.png" : "nofav.png";
+            var nuevoFavorito = new Favorite { UsuarioId = 4, ProductoId = item.id };
 
             if (item.isFavorite)
             {
-                App.Favorites.Add(item);
+                App.db.SaveFavoritoAsync(nuevoFavorito);
                 UserDialogs.Instance.Toast("Producto agregado a favoritos");
             }
             else
@@ -358,7 +357,7 @@ namespace ComparaYa
                 UserDialogs.Instance.Toast("Producto eliminado de favoritos");
             }
 
-            NotifyPropertyChanged(); // Asegúrate de notificar que la propiedad FavoriteIcon cambió.
+            NotifyPropertyChanged();
         }
 
         private void RefreshView_Refreshing(object sender, EventArgs e)

@@ -12,22 +12,22 @@
             HorizontalOptions="FillAndExpand"
             VerticalOptions="Center">
             <Image
-                Margin="0,0,0,25"
+                Margin="0,0,0,20"
                 Aspect="AspectFit"
-                HeightRequest="100"
-                Source="xd.png"
-                WidthRequest="100" />
+                HeightRequest="250"
+                Source="logohd.png"
+                WidthRequest="250" />
             <Label
                 Margin="10"
-                FontFamily="PP"
-                FontSize="24"
+                FontFamily="PPI"
+                FontSize="20"
                 HorizontalTextAlignment="Center"
                 Text="Iniciar sesion"
-                TextColor="#5c5c5c"
+                TextColor="#0c2f42"
                 TextTransform="Uppercase" />
 
             <Entry
-                x:Name="email"
+                x:Name="Email"
                 Margin="10"
                 IsTextPredictionEnabled="True"
                 Placeholder="email"
@@ -57,7 +57,7 @@
                 Orientation="Horizontal"
                 Spacing="5"
                 VerticalOptions="Center">
-                <Label Text="¿No tienes una cuenta?" TextColor="#9e9e9e" />
+                <Label Text="¿No tienes una cuenta?" TextColor="#0c2f42" />
                 <Label
                     x:Name="registrarteLabel"
                     Text="Registrarte"

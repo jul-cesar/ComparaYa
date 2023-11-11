@@ -13,7 +13,7 @@
     </ContentPage.IconImageSource>
 
     <Grid>
-        <Grid Margin="10,15,10,0">
+        <Grid Margin="3,15,5,0" Padding="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition Height="80" />
@@ -105,6 +105,28 @@
                         Span="2"
                         VerticalItemSpacing="15" />
                 </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+
+                    <StackLayout VerticalOptions="CenterAndExpand">
+                        <lottie:AnimationView
+                            Animation="loadd.json"
+                            AutoPlay="True"
+                            HeightRequest="55"
+                            HorizontalOptions="FillAndExpand"
+                            RepeatMode="Infinite"
+                            VerticalOptions="CenterAndExpand"
+                            WidthRequest="55" />
+
+
+                        <Label
+                            FontFamily="PPI"
+                            FontSize="12"
+                            HorizontalTextAlignment="Center"
+                            Text="Cargando productos..."
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+
+                </CollectionView.EmptyView>
                 <CollectionView.Footer>
                     <ActivityIndicator
                         x:Name="loadMoreActivityIndicator"

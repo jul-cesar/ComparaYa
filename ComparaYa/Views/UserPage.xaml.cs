@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.CommunityToolkit.Extensions;
+using ComparaYa.localBD;
 
 namespace ComparaYa
 {
@@ -22,6 +23,8 @@ namespace ComparaYa
         public string ApiKey = "AIzaSyAjgxZOgtQq3PwwHuwIE7MEu05KUIgW4zQ";
         private readonly HttpClient _cliente = new HttpClient();
         private string user { get; set; }
+     
+     
         public UserPage()
         {
             InitializeComponent();
@@ -32,8 +35,12 @@ namespace ComparaYa
         protected override async void OnAppearing()
         {
             await GetUserInfo();
+
+           
+
         }
 
+     
         private async Task<string> getUserName(string email)
         {
             var request = new HttpRequestMessage
@@ -83,7 +90,12 @@ namespace ComparaYa
 
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
-            await Navigation.ShowPopupAsync(new ModalFavorites());
+            await Navigation.PushAsync(new Favs());
+           
+            
+              
+          
+            
         }
     }
 }
