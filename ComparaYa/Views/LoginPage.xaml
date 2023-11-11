@@ -27,10 +27,10 @@
                 TextTransform="Uppercase" />
 
             <Entry
-                x:Name="Email"
+                x:Name="email"
                 Margin="10"
                 IsTextPredictionEnabled="True"
-                Placeholder="email"
+                Placeholder="Email"
                 PlaceholderColor="Gray"
                 TextColor="Black" />
             <Entry

@@ -11,7 +11,7 @@ namespace ComparaYa
 {
     public partial class App : Application
     {
-
+       public static int? currentId;
         private static Db _db;
         public static Db db
         {
@@ -32,7 +32,6 @@ namespace ComparaYa
         public static ObservableCollection<Product> ProductosCollection { get; set; } = new ObservableCollection<Product>();
         public static ObservableCollection<Categoria> CategoriasCollection { get; set; } = new ObservableCollection<Categoria>();
         public static ObservableCollection<Product> Carrito { get; set; } = new ObservableCollection<Product>();
-        public static ObservableCollection<Product> Favorites { get; set; } = new ObservableCollection<Product>();
 
 
         public App()

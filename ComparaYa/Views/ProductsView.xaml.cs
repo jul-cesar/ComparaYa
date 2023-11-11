@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.IO;
 using ComparaYa.localBD;
+using Firebase.Auth;
 
 namespace ComparaYa
 {
@@ -37,12 +38,12 @@ namespace ComparaYa
         bool isFavorite = false;
         private int? currentCategoryId = null;
 
-
+        public string ApiKey = "AIzaSyAjgxZOgtQq3PwwHuwIE7MEu05KUIgW4zQ";
+  
         public ProductsView()
         {
             InitializeComponent();
             BindingContext = this;
-          
 
         }
 
@@ -52,6 +53,7 @@ namespace ComparaYa
         {
             base.OnAppearing();
 
+           await GetUserInfo();
             currentCategoryId = null;
             currentPage = 1;
             if (App.ProductosCollection.Count == 0 || App.ProductosCollection == null)
@@ -67,6 +69,10 @@ namespace ComparaYa
                 await FetchCategoriasFromServer();
             }
 
+            await UpdateFavoriteStatusOfProducts(); 
+
+            cvPro.ItemsSource = App.ProductosCollection;
+
             cvPro.ItemsSource = App.ProductosCollection; 
 
             NotifyPropertyChanged();
@@ -78,6 +84,19 @@ namespace ComparaYa
             cvPro.RemainingItemsThreshold = 5;
 
 
+        }
+
+        private async Task UpdateFavoriteStatusOfProducts()
+        {
+            var favorites = await App.db.GetFavoritosAsync(App.currentId); 
+
+            foreach (var product in App.ProductosCollection)
+            {
+                product.IsFavorite = favorites.Any(f => f.ProductoId == product.id);
+                product.FavoriteIcon = product.IsFavorite ? "sifav.png" : "nofav.png";
+            }
+
+            NotifyPropertyChanged("App.ProductosCollection"); 
         }
 
 
@@ -204,11 +223,6 @@ namespace ComparaYa
             var item = (Categoria)button.BindingContext;
             currentCategoryId = item.id;
 
-           
-
-
-        
-
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{item.id}");
             request.Method = HttpMethod.Get;
@@ -250,7 +264,7 @@ namespace ComparaYa
             await imgModal(item);
         }
 
-        private async void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
            
             string searchText = e.NewTextValue;
@@ -303,17 +317,18 @@ namespace ComparaYa
 
         private async void xd_Clicked(object sender, EventArgs e)
         {
+
             backdark.IsVisible = true;
             backdark.IsVisible = load.IsVisible = true;
             await Task.Delay(1000);
-            await Task.Delay(1000);
+          
             var boton = (AnimationView)sender;
             var item = (Product)boton.BindingContext;
                 if (item != null)
             {
                 await FetchProductsFromServer();
                 await Navigation.PushAsync(new ComparationPage(item));
-                UserDialogs.Instance.HideLoading();
+               
              
                 backdark.IsVisible = load.IsVisible = false;
                 backdark.IsVisible = false;
@@ -337,34 +352,78 @@ namespace ComparaYa
             }
     }
 
-        public  void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private async Task GetUserInfo()
+        {
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+            try
+            {
+                var savedFirebaseAuth = JsonConvert.DeserializeObject<Firebase.Auth.FirebaseAuth>(Xamarin.Essentials.Preferences.Get("firebaseRefreshToken", ""));
+                var refreshedContent = await authProvider.RefreshAuthAsync(savedFirebaseAuth);
+                Xamarin.Essentials.Preferences.Set("firebaseRefreshToken", JsonConvert.SerializeObject(refreshedContent));
+                
+
+                string encodedEmail = Uri.EscapeDataString(savedFirebaseAuth.User.Email);
+                int? userId = await getCurrentUserId(encodedEmail);
+                App.currentId = userId;
+               
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("error", "token expirado", "ok");
+            }
+        }
+
+        private async Task<int?> getCurrentUserId(string email)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/usuarioid/{email}"),
+                Method = HttpMethod.Get,
+            };
+            request.Headers.Add("Accept", "application/json");
+
+            HttpResponseMessage response = await _cliente.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string contentId = await response.Content.ReadAsStringAsync();
+                var resultadoNombre = JsonConvert.DeserializeObject<IdUser>(contentId);
+
+                return resultadoNombre?.id; 
+            }
+            return null; 
+        }
+
+
+
+
+        public async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             var button = (Image)sender;
             var item = (Product)button.BindingContext;
             item.isFavorite = !item.isFavorite;
-
             item.FavoriteIcon = item.isFavorite ? "sifav.png" : "nofav.png";
-            var nuevoFavorito = new Favorite { UsuarioId = 4, ProductoId = item.id };
-
+         
             if (item.isFavorite)
             {
-                App.db.SaveFavoritoAsync(nuevoFavorito);
-                UserDialogs.Instance.Toast("Producto agregado a favoritos");
+                var existingFavorite = await App.db.GetFavoritoByProductoId(item.id, App.currentId);
+                if (existingFavorite == null)
+                {
+                    var favorito = new Favorite { UsuarioId = App.currentId, ProductoId = item.id };
+                    await App.db.SaveFavoritoAsync(favorito);
+                    UserDialogs.Instance.Toast("Producto agregado a favoritos");
+                }
             }
             else
             {
-                App.Favorites.Remove(item);
+                await App.db.DeleteFavoritoAsync(item.id, 4);
                 UserDialogs.Instance.Toast("Producto eliminado de favoritos");
             }
 
             NotifyPropertyChanged();
         }
 
-        private void RefreshView_Refreshing(object sender, EventArgs e)
-        {
 
-        }
 
-       
+
     }
 }

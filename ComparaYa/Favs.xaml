@@ -30,9 +30,7 @@
                     VerticalOptions="Center"
                     Color="Blue" />
             </CollectionView.Footer>
-            <CollectionView.Header>
-                <Button Clicked="Button_Clicked" Text="borrar" />
-            </CollectionView.Header>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout BackgroundColor="Transparent" HorizontalOptions="CenterAndExpand">

@@ -81,7 +81,7 @@ namespace ComparaYa
                 backdark.IsVisible = load.IsVisible = false;
                 backdark.IsVisible = false;
                 UserDialogs.Instance.HideLoading();
-                await DisplayAlert("Error", user.Text, "ok");
+                await DisplayAlert("Error", "Error al registrarte", "ok");
 
             }
         }

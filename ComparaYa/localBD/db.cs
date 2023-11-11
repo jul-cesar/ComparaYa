@@ -17,21 +17,33 @@ namespace ComparaYa.localBD
             _connection.CreateTableAsync<Favorite>().Wait();
         }
 
-        public  Task<List<Favorite>> GetFavoritosAsync()
+        public Task<List<Favorite>> GetFavoritosAsync(int? userId)
         {
-            return _connection.Table<Favorite>().ToListAsync();
+            // Using a LINQ query to filter favorites by the provided user ID
+            return _connection.Table<Favorite>().Where(f => f.UsuarioId == userId).ToListAsync();
         }
+
 
         public Task<int> SaveFavoritoAsync(Favorite favorito)
         {
+           
             return _connection.InsertAsync(favorito);
         }
 
-        public Task<int> DeleteFavoritoAsync(int favoritoId)
+
+        public async Task<Favorite> GetFavoritoByProductoId(int productoId, int? usuarioId)
         {
-            return _connection.DeleteAsync<Favorite>(favoritoId);
+            return await _connection.Table<Favorite>().Where(f => f.ProductoId == productoId && f.UsuarioId == usuarioId).FirstOrDefaultAsync();
         }
 
+        public async Task DeleteFavoritoAsync(int productoId, int usuarioId)
+        {
+            var favorite = await _connection.Table<Favorite>().Where(f => f.ProductoId == productoId && f.UsuarioId == usuarioId).FirstOrDefaultAsync();
+            if (favorite != null)
+            {
+                await _connection.DeleteAsync(favorite);
+            }
+        }
         public Task<int> DeleteAllFavoritesAsync()
         {
             return _connection.DeleteAllAsync<Favorite>();

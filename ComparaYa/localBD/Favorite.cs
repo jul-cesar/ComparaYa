@@ -12,11 +12,9 @@ namespace ComparaYa.localBD
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public int UsuarioId { get; set; }
+        public int? UsuarioId { get; set; }
         public int ProductoId { get; set; }
 
-        [Ignore]
-        public Product Producto { get; set; }
 
     }
 }

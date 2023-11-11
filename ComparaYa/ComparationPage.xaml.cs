@@ -22,9 +22,7 @@ namespace ComparaYa
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ComparationPage : ContentPage, INotifyPropertyChanged
 	{
-        private bool _hasCalledAPI = false;
-        private bool _isDataLoaded = false;
-        bool isFav = false;
+     
         public ObservableCollection<Product> EqualsProducts { get; set; }
 
         public ObservableCollection<Product> AlikeProducts { get; set; }
@@ -87,14 +85,12 @@ namespace ComparaYa
 
         private string NormalizeString(string input)
         {
-            // Convertir a minúsculas
+           
             input = input.ToLower();
 
-            // Eliminar caracteres especiales y espacios adicionales
-            // Aquí se puede ajustar la expresión regular según sea necesario
+ 
             input = Regex.Replace(input, @"[^a-z0-9\s]", "");
 
-            // Devolver el string normalizado
             return input;
         }
 
@@ -132,24 +128,7 @@ namespace ComparaYa
         private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
 
-            var button = (Image)sender;
-            var item = (Product)button.BindingContext;
-            item.isFavorite = !item.isFavorite;
-
-            item.FavoriteIcon = item.isFavorite ? "sifav.png" : "nofav.png";
-
-            if (item.isFavorite)
-            {
-                App.Favorites.Add(item);
-                UserDialogs.Instance.Toast("Producto agregado a favoritos");
-            }
-            else
-            {
-                App.Favorites.Remove(item);
-                UserDialogs.Instance.Toast("Producto eliminado de favoritos");
-            }
-
-            NotifyPropertyChanged();
+            
         }
 
         private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)

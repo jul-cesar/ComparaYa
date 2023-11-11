@@ -35,13 +35,14 @@ namespace ComparaYa
         }
 
         private async void LogIn(object sender, EventArgs e)
-        {
-       
+        { 
             try
             {
                 backdark.IsVisible = true;
                backdark.IsVisible = load.IsVisible = true;   
                 await Task.Delay(1000);
+               
+
                 var authProvider = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(email.Text, passw.Text);
                 var content = await auth.GetFreshAuthAsync();

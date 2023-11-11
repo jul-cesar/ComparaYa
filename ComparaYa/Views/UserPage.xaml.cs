@@ -90,6 +90,7 @@ namespace ComparaYa
 
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
+            Console.WriteLine(App.currentId.ToString());
             await Navigation.PushAsync(new Favs());
            
             
