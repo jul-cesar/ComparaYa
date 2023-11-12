@@ -11,9 +11,9 @@ namespace ComparaYa.Models
      public int id {  get; set; }
         public string nombre { get; set; }
         public string imagen_url { get; set; }
-        public string precio_d1 { get; set;}
-        public string precio_olim { get; set; }
-        public string precio_exito { get; set; }
+        public decimal precio_d1 { get; set;}
+        public decimal precio_olim { get; set; }
+        public decimal precio_exito { get; set; }
         public int categoria_id { get; set; }
         public bool isFavorite;
         public bool IsFavorite

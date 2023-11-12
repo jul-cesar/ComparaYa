@@ -39,7 +39,7 @@
                     Margin="10"
                     Animation="filtersAni.json"
                     AutoPlay="True"
-                    Clicked="AnimationView_Clicked"
+                    Clicked="OpenFilters"
                     HeightRequest="30"
                     RepeatCount="3"
                     RepeatMode="Infinite"
@@ -66,7 +66,7 @@
                                 BackgroundColor="White"
                                 BorderColor="Gray"
                                 BorderWidth="2"
-                                Clicked="Button_Clicked"
+                                Clicked="FilterByCategory"
                                 CornerRadius="20"
                                 HeightRequest="42"
                                 Text="{Binding nombre}"
@@ -90,7 +90,7 @@
                     PlaceholderColor="#9E9E9E"
                     TextChanged="SearchBar_TextChanged"
                     TextColor="Black"
-                    VerticalOptions="FillAndExpand" />
+                    VerticalOptions="CenterAndExpand" />
             </FlexLayout>
 
             <CollectionView
@@ -118,12 +118,7 @@
                             WidthRequest="55" />
 
 
-                        <Label
-                            FontFamily="PPI"
-                            FontSize="12"
-                            HorizontalTextAlignment="Center"
-                            Text="Cargando productos..."
-                            VerticalTextAlignment="Center" />
+
                     </StackLayout>
 
                 </CollectionView.EmptyView>
@@ -155,7 +150,7 @@
                                         Source="{Binding imagen_url}"
                                         VerticalOptions="CenterAndExpand">
                                         <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                                            <TapGestureRecognizer Tapped="OpenImage" />
                                         </Image.GestureRecognizers>
                                     </Image>
                                     <StackLayout VerticalOptions="FillAndExpand">
@@ -173,7 +168,7 @@
                                             HorizontalTextAlignment="Center"
                                             TextColor="Black">
                                             <Label.Text>
-                                                <Binding Path="precio_d1" StringFormat="D1: ${0}" />
+                                                <Binding Path="precio_d1" StringFormat="D1: {0:C}" />
                                             </Label.Text>
                                             <Label.Triggers>
                                                 <DataTrigger
@@ -184,6 +179,7 @@
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
+
                                         <Label
                                             x:Name="priceolim"
                                             FontFamily="PPI"
@@ -192,7 +188,7 @@
                                             HorizontalTextAlignment="Center"
                                             TextColor="Black">
                                             <Label.Text>
-                                                <Binding Path="precio_olim" StringFormat="Olimpica: ${0}" />
+                                                <Binding Path="precio_olim" StringFormat="Olimpica: {0:C}" />
                                             </Label.Text>
                                             <Label.Triggers>
                                                 <DataTrigger
@@ -213,7 +209,7 @@
                                             VerticalOptions="End"
                                             VerticalTextAlignment="Center">
                                             <Label.Text>
-                                                <Binding Path="precio_exito" StringFormat="Exito: ${0}" />
+                                                <Binding Path="precio_exito" StringFormat="Exito: {0:C}" />
                                             </Label.Text>
                                             <Label.Triggers>
                                                 <DataTrigger
@@ -224,6 +220,7 @@
                                                 </DataTrigger>
                                             </Label.Triggers>
                                         </Label>
+
                                     </StackLayout>
 
                                 </StackLayout>
@@ -237,7 +234,7 @@
                                     x:Name="addAni"
                                     Animation="addAni.json"
                                     AutoPlay="True"
-                                    Clicked="addAni_Clicked"
+                                    Clicked="AddToCart"
                                     HeightRequest="55"
                                     HorizontalOptions="FillAndExpand"
                                     RepeatCount="3"
@@ -248,7 +245,7 @@
                                     x:Name="xd"
                                     Animation="lupa2.json"
                                     AutoPlay="True"
-                                    Clicked="xd_Clicked"
+                                    Clicked="Comparation"
                                     HeightRequest="55"
                                     HorizontalOptions="FillAndExpand"
                                     RepeatCount="3"
@@ -263,7 +260,7 @@
                                     VerticalOptions="FillAndExpand"
                                     WidthRequest="35">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                        <TapGestureRecognizer Tapped="AddToFavorite" />
                                     </Image.GestureRecognizers>
                                 </Image>
                             </FlexLayout>

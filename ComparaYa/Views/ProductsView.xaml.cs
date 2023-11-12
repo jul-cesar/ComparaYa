@@ -20,6 +20,7 @@ using System.Runtime.CompilerServices;
 using System.IO;
 using ComparaYa.localBD;
 using Firebase.Auth;
+using System.Globalization;
 
 namespace ComparaYa
 {
@@ -44,6 +45,10 @@ namespace ComparaYa
         {
             InitializeComponent();
             BindingContext = this;
+            MessagingCenter.Subscribe<Modal, float>(this, "FilterProducts", (sender, arg) =>
+            {
+                ApplyFilter(arg);
+            });
 
         }
 
@@ -84,6 +89,12 @@ namespace ComparaYa
             cvPro.RemainingItemsThreshold = 5;
 
 
+        }
+
+        private void ApplyFilter(float priceFrom)
+        {
+           
+          
         }
 
         private async Task UpdateFavoriteStatusOfProducts()
@@ -217,7 +228,7 @@ namespace ComparaYa
         }
 
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void FilterByCategory(object sender, EventArgs e)
         {
             var button = (Button)sender;
             var item = (Categoria)button.BindingContext;
@@ -257,7 +268,7 @@ namespace ComparaYa
         }
 
 
-        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        private async void OpenImage(object sender, EventArgs e)
         {
             var button = (Image)sender;
             var item = (Product)button.BindingContext;
@@ -283,7 +294,7 @@ namespace ComparaYa
 
 
 
-        private async void addAni_Clicked(object sender, EventArgs e)
+        private async void AddToCart(object sender, EventArgs e)
         {
             var button = (AnimationView)sender;
             var item = (Product)button.BindingContext;
@@ -302,7 +313,7 @@ namespace ComparaYa
             await Task.Delay(1000);
         }
 
-        private async void AnimationView_Clicked(object sender, EventArgs e)
+        private async void OpenFilters(object sender, EventArgs e)
         {
             await Navigation.ShowPopupAsync(new Modal());
         }
@@ -315,12 +326,12 @@ namespace ComparaYa
 
         }
 
-        private async void xd_Clicked(object sender, EventArgs e)
+        private async void Comparation(object sender, EventArgs e)
         {
 
             backdark.IsVisible = true;
             backdark.IsVisible = load.IsVisible = true;
-            await Task.Delay(1000);
+           
           
             var boton = (AnimationView)sender;
             var item = (Product)boton.BindingContext;
@@ -396,7 +407,7 @@ namespace ComparaYa
 
 
 
-        public async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        public async void AddToFavorite(object sender, EventArgs e)
         {
             var button = (Image)sender;
             var item = (Product)button.BindingContext;
@@ -415,7 +426,7 @@ namespace ComparaYa
             }
             else
             {
-                await App.db.DeleteFavoritoAsync(item.id, 4);
+                await App.db.DeleteFavoritoAsync(item.id, App.currentId);
                 UserDialogs.Instance.Toast("Producto eliminado de favoritos");
             }
 

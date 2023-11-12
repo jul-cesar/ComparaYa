@@ -14,86 +14,89 @@ using Xamarin.CommunityToolkit.Converters;
 using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 using FuzzySharp;
 
 namespace ComparaYa
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ComparationPage : ContentPage, INotifyPropertyChanged
-	{
-     
-        public ObservableCollection<Product> EqualsProducts { get; set; }
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ComparationPage : ContentPage, INotifyPropertyChanged
+    {
+        // Constants
+        private const int TokenSortRatioThreshold = 75;
+        private const int TokenSetRatioThreshold = 85;
+        private const int PartialRatioThreshold = 85;
+        private const int RatioThreshold = 60;
 
+        public ObservableCollection<Product> EqualsProducts { get; set; }
         public ObservableCollection<Product> AlikeProducts { get; set; }
 
-        string palabraProducto;
-        Array palabrasProducto;
+        private Product prod;
 
-        Product prod;
+        public ComparationPage()
+        {
+
+        }
+
         public ComparationPage(Product prod)
         {
             InitializeComponent();
-           
-
             this.prod = prod;
-            palabraProducto = prod.nombre.Split(' ')[0];
-            palabrasProducto = prod.nombre.Split(' ');
-            int umbralSimilitud = 67;
-
-            EqualsProducts = new ObservableCollection<Product>(
-            App.ProductosCollection.Where(p =>
-            {
-                var normalizedNombre = NormalizeString(p.nombre);
-                var normalizedProdNombre = NormalizeString(prod.nombre);
-
-                return Fuzz.TokenSortRatio(normalizedNombre, normalizedProdNombre) > 67 ||
-                       Fuzz.TokenSetRatio(normalizedNombre, normalizedProdNombre) > 73 ||
-                       Fuzz.PartialRatio(normalizedNombre, normalizedProdNombre) > 83 ;
-            })
-        );
-
-
-            AlikeProducts = new ObservableCollection<Product>(App.ProductosCollection
-              .Where(p =>
-              {
-                  var normalizedNombre = NormalizeString(p.nombre);
-                  var palabraProductoNormalizada = NormalizeString(palabraProducto);
-
-                  return (Fuzz.PartialRatio(normalizedNombre, palabraProductoNormalizada) > 55||
-                          Fuzz.TokenSortRatio(normalizedNombre, palabraProductoNormalizada) > 60 ||
-                          Fuzz.Ratio(normalizedNombre, palabraProductoNormalizada) > 50) &&
-                          !normalizedNombre.Equals(NormalizeString(prod.nombre));
-              })
-          );
-
+            LoadProducts();
             this.BindingContext = this;
         }
 
-
-
-        /* protected override async void OnAppearing()
-         {
-             base.OnAppearing();
-
-             if (!_hasCalledAPI)
-             {
-                 _hasCalledAPI = true;
-                 await ApiCall();
-             }
-         } */
-
-        private string NormalizeString(string input)
+        private void LoadProducts()
         {
-           
-            input = input.ToLower();
-
- 
-            input = Regex.Replace(input, @"[^a-z0-9\s]", "");
-
-            return input;
+            EqualsProducts = GetEqualsProducts(prod);
+            AlikeProducts = GetAlikeProducts(prod);
         }
 
+        private ObservableCollection<Product> GetEqualsProducts(Product product)
+        {
+            return new ObservableCollection<Product>(
+                App.ProductosCollection.Where(p => IsSimilar(p.nombre, product.nombre))
+            );
+        }
+
+        private ObservableCollection<Product> GetAlikeProducts(Product product)
+        {
+            return new ObservableCollection<Product>(
+                App.ProductosCollection.Where(p =>
+                    IsSomewhatSimilar(p.nombre, product.nombre) &&
+                    !NormalizeString(p.nombre).Equals(NormalizeString(product.nombre)))
+            );
+
+
+        }
+        private bool IsSimilar(string name1, string name2)
+        {
+            var normalizedNombre1 = NormalizeString(name1);
+            var normalizedNombre2 = NormalizeString(name2);
+
+            return Fuzz.TokenSortRatio(normalizedNombre1, normalizedNombre2) > TokenSortRatioThreshold ||
+                   Fuzz.TokenSetRatio(normalizedNombre1, normalizedNombre2) > TokenSetRatioThreshold ||
+                   Fuzz.PartialRatio(normalizedNombre1, normalizedNombre2) > PartialRatioThreshold;
+        }
+
+        private bool IsSomewhatSimilar(string name1, string name2)
+        {
+            var normalizedNombre1 = NormalizeString(name1);
+            var normalizedNombre2 = NormalizeString(name2);
+
+            return Fuzz.PartialRatio(normalizedNombre1, normalizedNombre2) > RatioThreshold ||
+                   Fuzz.TokenSortRatio(normalizedNombre1, normalizedNombre2) > (TokenSortRatioThreshold - 10) ||
+                   Fuzz.Ratio(normalizedNombre1, normalizedNombre2) > (RatioThreshold - 10);
+        }
+        private string NormalizeString(string input)
+            {
+
+                input = input.ToLower();
+
+                input = Regex.Replace(input, @"[^a-z0-9\s]", "");
+
+                return input;
+            }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -133,24 +136,16 @@ namespace ComparaYa
 
         private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
         {
+            
             await Navigation.PushAsync(new PlaneadorCompra());
         }
 
-
-        /* public async Task<ObservableCollection<Product>> ApiCall()
-         {
-             try
-             {
-                 AlikeProducts = await ProductsFilters.FiltrarProductosSimilares(App.ProductosCollection, prod);
-                 NotifyPropertyChanged(nameof(AlikeProducts));
-                 _isDataLoaded = true;
-             }
-             catch (Exception ex)
-             {
-                 // Handle or log exception
-                 Console.WriteLine(ex.Message);
-             }
-             return AlikeProducts;
-         } */
+        private async void AnimationView_Clicked(object sender, EventArgs e)
+        {
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                await Navigation.PopAsync();
+            }
+        }
     }
 }

@@ -68,5 +68,13 @@ namespace ComparaYa
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         }
+
+        private async void AnimationView_Clicked(object sender, EventArgs e)
+        {
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                await Navigation.PopAsync();
+            }
+        }
     }
 }

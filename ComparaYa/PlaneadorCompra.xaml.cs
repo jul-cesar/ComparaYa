@@ -19,12 +19,12 @@ namespace ComparaYa
     public partial class PlaneadorCompra : ContentPage, INotifyPropertyChanged
     {
 
-
         public PlaneadorCompra()
         {
             InitializeComponent();
             BindingContext = this;
             Console.WriteLine(CultureInfo.CurrentCulture);
+         
 
 
         }
@@ -44,12 +44,14 @@ namespace ComparaYa
             {
                 totales.IsVisible = true;
                 carText.Text = "Planea tu compra";
+               
                 NotifyPropertyChanged();
             }
             else
             {
                 totales.IsVisible = false;
                 carText.Text = "";
+               
                 NotifyPropertyChanged();
             }
         }
@@ -64,39 +66,33 @@ namespace ComparaYa
             {
                 foreach (Product item in App.Carrito)
                 {
-                    
-                    string precioExito = item.precio_exito.Trim();
-                    string precioD1 = item.precio_d1.Trim();
-                    string precioOlimpica= item.precio_olim.Trim();
 
-                    if (float.TryParse(precioExito, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioE))
-                    {
-    
-                        int cantidadE = int.Parse(item.cantidad);
-                        totalAmountExito += precioE * cantidadE;
-                    }if(float.TryParse(precioD1, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioD))
-                    {
-                        int cantidadD = int.Parse(item.cantidad);
-                        totalAmountD1 += precioD * cantidadD;
-                    }
-                    if (float.TryParse(precioOlimpica, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out float precioO))
-                    {
-                        int cantidadO = int.Parse(item.cantidad);
-                        totalAmountOlimpica += precioO * cantidadO;
-                    }
-                    else
-                    {
-                        
-                        Console.WriteLine("Failed to parse precio_exito: " + precioExito, precioD1, precioOlimpica);
-                    }
+                    decimal precioExito = item.precio_exito;
+                    decimal precioD1 = item.precio_d1;
+                    decimal precioOlimpica = item.precio_olim;
+
+                    // No es necesario usar TryParse aquí ya que los valores ya son decimales
+                    float precioE = (float)precioExito;
+                    int cantidadE = int.Parse( item.cantidad);
+                    totalAmountExito += precioE * cantidadE;
+
+                    float precioD = (float)precioD1;
+                    int cantidadD = int.Parse(item.cantidad);
+                    totalAmountD1 += precioD * cantidadD;
+
+                    float precioO = (float)precioOlimpica;
+                    int cantidadO = int.Parse(item.cantidad);
+                    totalAmountOlimpica += precioO * cantidadO;
+
+                   
                 }
 
             }
-            totalExito.Text = totalAmountExito.ToString("F3");
-            totald1.Text = totalAmountD1.ToString("F3"); 
-            totalOlimpica.Text = totalAmountOlimpica.ToString("F3"); 
+            totalExito.Text = totalAmountExito.ToString();
+            totald1.Text = totalAmountD1.ToString(); 
+            totalOlimpica.Text = totalAmountOlimpica.ToString(); 
             float suma = totalAmountExito + totalAmountD1 + totalAmountOlimpica;
-            neto.Text = suma.ToString("F3");
+            neto.Text = suma.ToString();
 
             NotifyPropertyChanged();
           
@@ -105,7 +101,7 @@ namespace ComparaYa
 
 
 
-        private async void delete_Clicked(object sender, EventArgs e)
+        private void delete_Clicked(object sender, EventArgs e)
         {
             var botonxd = (AnimationView)sender;
             var itemxd = (Product)botonxd.BindingContext;
@@ -174,5 +170,17 @@ namespace ComparaYa
 
         }
 
+        private async void backcart_Clicked(object sender, EventArgs e)
+        {
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                backcart.IsVisible = true; 
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                backcart.IsVisible = false;
+            }
+        }
     }
 }

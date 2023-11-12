@@ -36,7 +36,7 @@ namespace ComparaYa.localBD
             return await _connection.Table<Favorite>().Where(f => f.ProductoId == productoId && f.UsuarioId == usuarioId).FirstOrDefaultAsync();
         }
 
-        public async Task DeleteFavoritoAsync(int productoId, int usuarioId)
+        public async Task DeleteFavoritoAsync(int productoId, int? usuarioId)
         {
             var favorite = await _connection.Table<Favorite>().Where(f => f.ProductoId == productoId && f.UsuarioId == usuarioId).FirstOrDefaultAsync();
             if (favorite != null)

@@ -2,15 +2,33 @@
 <ContentPage
     x:Class="ComparaYa.Favs"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
     <StackLayout>
-        <Label
-            Margin="4"
-            Padding="5"
-            FontFamily="PPI"
-            FontSize="14"
-            HorizontalTextAlignment="Center"
-            Text="Mis favoritos" />
+        <FlexLayout AlignContent="Center" AlignItems="Center">
+            <lottie:AnimationView
+                Margin="0,0,30,0"
+                Animation="back.json"
+                AutoPlay="True"
+                Clicked="AnimationView_Clicked"
+                HeightRequest="80"
+                HorizontalOptions="StartAndExpand"
+                RepeatCount="3"
+                VerticalOptions="Fill"
+                WidthRequest="60" />
+
+            <Label
+                Margin="10"
+                Padding="5"
+                FontFamily="PPI"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Text="Mis favoritos"
+                TextColor="Black" />
+        </FlexLayout>
+
         <CollectionView
             x:Name="cvPro"
             Grid.Row="3"
@@ -60,11 +78,13 @@
                                         TextColor="#4A4A4A" />
                                     <Label
                                         x:Name="priced1"
+                                        FontFamily="PPI"
                                         FontSize="14"
                                         HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center">
+                                        HorizontalTextAlignment="Center"
+                                        TextColor="Black">
                                         <Label.Text>
-                                            <Binding Path="precio_d1" StringFormat="Precio D1: {0}" />
+                                            <Binding Path="precio_d1" StringFormat="D1: {0:C}" />
                                         </Label.Text>
                                         <Label.Triggers>
                                             <DataTrigger
@@ -75,13 +95,16 @@
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
+
                                     <Label
                                         x:Name="priceolim"
+                                        FontFamily="PPI"
                                         FontSize="14"
                                         HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center">
+                                        HorizontalTextAlignment="Center"
+                                        TextColor="Black">
                                         <Label.Text>
-                                            <Binding Path="precio_olim" StringFormat="Precio Olimpica: {0}" />
+                                            <Binding Path="precio_olim" StringFormat="Olimpica: {0:C}" />
                                         </Label.Text>
                                         <Label.Triggers>
                                             <DataTrigger
@@ -96,13 +119,13 @@
                                     <Label
                                         x:Name="priceexito"
                                         FontFamily="PPI"
-                                        FontSize="15"
+                                        FontSize="14"
                                         HorizontalOptions="CenterAndExpand"
                                         TextColor="Black"
                                         VerticalOptions="End"
                                         VerticalTextAlignment="Center">
                                         <Label.Text>
-                                            <Binding Path="precio_exito" StringFormat="Exito: {0}" />
+                                            <Binding Path="precio_exito" StringFormat="Exito: {0:C}" />
                                         </Label.Text>
                                         <Label.Triggers>
                                             <DataTrigger

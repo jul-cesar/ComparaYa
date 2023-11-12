@@ -45,6 +45,8 @@ namespace ComparaYa
             {
                 MainPage = new NavigationPage(new WelcomePage());
             }
+
+            new NavigationPage(new ComparationPage()); 
         }
 
      

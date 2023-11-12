@@ -34,19 +34,19 @@
             Grid.Row="2"
             Margin="5"
             BackgroundColor="Transparent"
-            ItemsSource="{Binding Items}">
+            ItemsSource="{Binding Items}"
+            SelectionMode="Single">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <FlexLayout Margin="5,3,5,3" BackgroundColor="Transparent">
-
-
                         <Button
                             BackgroundColor="White"
                             BorderColor="Gray"
                             BorderWidth="2"
+                            Clicked="Button_Clicked"
                             CornerRadius="13"
                             HeightRequest="42"
                             Text="{Binding .}"
@@ -83,6 +83,7 @@
                             BackgroundColor="White"
                             BorderColor="Gray"
                             BorderWidth="2"
+                            Clicked="Button_Clicked_2"
                             CornerRadius="13"
                             HeightRequest="42"
                             Text="{Binding .}"
@@ -98,6 +99,7 @@
             <Button
                 BackgroundColor="White"
                 BorderColor="Gray"
+                Clicked="Button_Clicked_1"
                 Text="Aplicar"
                 WidthRequest="100" />
         </StackLayout>
