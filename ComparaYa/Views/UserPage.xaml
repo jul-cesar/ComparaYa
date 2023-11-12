@@ -3,56 +3,77 @@
     x:Class="ComparaYa.UserPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     NavigationPage.HasNavigationBar="False">
 
     <ContentPage.IconImageSource>
         <FileImageSource File="user.png" />
     </ContentPage.IconImageSource>
-    <ScrollView>
-        <StackLayout Padding="20" Spacing="10">
+    <Grid>
+        <ScrollView>
+            <StackLayout Padding="20" Spacing="10">
 
-            <!--  Información del usuario  -->
-            <Frame CornerRadius="10" HasShadow="True">
-                <StackLayout Spacing="10">
-                    <Image
-                        HeightRequest="100"
-                        HorizontalOptions="Center"
-                        Source="user_profile.png"
-                        WidthRequest="100" />
-                    <Label
-                        x:Name="nombreUser"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        TextColor="Black" />
-                    <Label
-                        x:Name="emailUser"
-                        FontAttributes="Italic"
-                        HorizontalOptions="Center"
-                        TextColor="Black" />
+                <!--  Información del usuario  -->
+                <Frame CornerRadius="10" HasShadow="True">
+                    <StackLayout Spacing="10">
+                        <Image
+                            HeightRequest="100"
+                            HorizontalOptions="Center"
+                            Source="user_profile.png"
+                            WidthRequest="100" />
+                        <Label
+                            x:Name="nombreUser"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            TextColor="Black" />
+                        <Label
+                            x:Name="emailUser"
+                            FontAttributes="Italic"
+                            HorizontalOptions="Center"
+                            TextColor="Black" />
 
 
-                </StackLayout>
-            </Frame>
-            <Button
-                BackgroundColor="White"
-                BorderColor="Gray"
-                BorderWidth="1"
-                Clicked="Button_Clicked_1"
-                CornerRadius="20"
-                Text="Mis favoritos" />
-            <StackLayout VerticalOptions="EndAndExpand">
+                    </StackLayout>
+                </Frame>
                 <Button
-                    x:Name="logoutButton"
-                    BackgroundColor="Red"
-                    Text="Cerrar sesión"
-                    TextColor="White" />
+                    BackgroundColor="White"
+                    BorderColor="Gray"
+                    BorderWidth="1"
+                    Clicked="Button_Clicked_1"
+                    CornerRadius="20"
+                    Text="Mis favoritos" />
+                <StackLayout VerticalOptions="EndAndExpand">
+                    <Button
+                        x:Name="logoutButton"
+                        BackgroundColor="Red"
+                        Text="Cerrar sesión"
+                        TextColor="White" />
+                </StackLayout>
+
+
+
             </StackLayout>
+        </ScrollView>
 
 
+        <BoxView
+            x:Name="backdark"
+            IsVisible="false"
+            Opacity="0.2"
+            Color="Black" />
+        <AbsoluteLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <lottie:AnimationView
+                x:Name="load"
+                Animation="load.json"
+                AutoPlay="True"
+                HeightRequest="110"
+                HorizontalOptions="Center"
+                IsVisible="false"
+                RepeatMode="Infinite"
+                WidthRequest="110" />
+        </AbsoluteLayout>
 
-        </StackLayout>
-    </ScrollView>
 
-
+    </Grid>
 
 </ContentPage>

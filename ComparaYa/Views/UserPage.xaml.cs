@@ -14,6 +14,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.CommunityToolkit.Extensions;
 using ComparaYa.localBD;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ComparaYa
 {
@@ -87,16 +89,52 @@ namespace ComparaYa
            await Navigation.PushAsync(new WelcomePage());
         }
 
+        protected async Task FetchProductsFromServer()
+        {
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos");
+            request.Method = HttpMethod.Get;
+            request.Headers.Add("Accept", "application/json");
+
+            HttpResponseMessage response = await _cliente.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+
+            {
+                string content = await response.Content.ReadAsStringAsync();
+
+                var resultado = JsonConvert.DeserializeObject<ObservableCollection<Product>>(content);
+                App.ProductosCollection.Clear();
+
+                foreach (var producto in resultado)
+                {
+                    App.ProductosCollection.Add(producto);
+                }
+                NotifyPropertyChanged();
+            }
+        }
+
+
 
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
+            backdark.IsVisible = true;
+            backdark.IsVisible = load.IsVisible = true;
+            await  FetchProductsFromServer();
             Console.WriteLine(App.currentId.ToString());
             await Navigation.PushAsync(new Favs());
-           
-            
-              
-          
-            
+         
+            backdark.IsVisible = load.IsVisible = false;
+            backdark.IsVisible = false;
+
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         }
     }
 }
