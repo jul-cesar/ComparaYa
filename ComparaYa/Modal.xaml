@@ -28,7 +28,7 @@
             Margin="10"
             FontFamily="PPI"
             FontSize="17"
-            Text="Precios desde:"
+            Text="Precios hasta:"
             TextColor="Black" />
         <CollectionView
             Grid.Row="2"

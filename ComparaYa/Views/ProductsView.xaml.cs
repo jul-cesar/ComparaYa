@@ -21,6 +21,7 @@ using System.IO;
 using ComparaYa.localBD;
 using Firebase.Auth;
 using System.Globalization;
+using System.Web;
 
 namespace ComparaYa
 {
@@ -38,17 +39,14 @@ namespace ComparaYa
         private readonly HttpClient _cliente = new HttpClient();
         bool isFavorite = false;
         private int? currentCategoryId = null;
-
         public string ApiKey = "AIzaSyAjgxZOgtQq3PwwHuwIE7MEu05KUIgW4zQ";
   
         public ProductsView()
         {
             InitializeComponent();
             BindingContext = this;
-            MessagingCenter.Subscribe<Modal, float>(this, "FilterProducts", (sender, arg) =>
-            {
-                ApplyFilter(arg);
-            });
+            
+
 
         }
 
@@ -56,6 +54,11 @@ namespace ComparaYa
 
         protected override async void OnAppearing()
         {
+
+            MessagingCenter.Subscribe<Modal, FiltrosData>(this, "FilterProducts", async (sender, filterData) =>
+            {
+               await ApplyFilter(filterData);
+            });
             base.OnAppearing();
 
            await GetUserInfo();
@@ -90,12 +93,90 @@ namespace ComparaYa
 
 
         }
-
-        private void ApplyFilter(float priceFrom)
+        private async Task ApplyFilter(FiltrosData filtros)
         {
-           
-          
-        }
+
+            try
+            {
+                string requestUri;
+
+                // Verificar si PriceFrom es un decimal válido y no es cero
+                bool isPriceFromValid = filtros.PriceFrom.HasValue && filtros.PriceFrom.Value > 0;
+
+                if (currentCategoryId == null || currentCategoryId == 0)
+                {
+                    // Caso: Filtrar solo por precio (sin categoría seleccionada y sin distribuidor)
+                    if (isPriceFromValid && string.IsNullOrEmpty(filtros.Distri))
+                    {
+                        requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/filtrados/{filtros.PriceFrom.Value}";
+                    }
+                    // Caso: Filtrar por precio y distribuidor (sin categoría seleccionada)
+                    else if (isPriceFromValid && !string.IsNullOrEmpty(filtros.Distri))
+                    {
+                        requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/filtrados/{filtros.PriceFrom.Value}/distribuidor/{filtros.Distri}";
+                    }
+                    // Caso: Filtrar solo por distribuidor (sin categoría ni precio)
+                    else if (!string.IsNullOrEmpty(filtros.Distri))
+                    {
+                        requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/filtrados/distribuidor/{filtros.Distri}";
+                    }
+                    // Caso: No hay filtros especificados
+                    else
+                    {
+                        requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos";
+                    }
+                }
+                else
+                {
+                    // Caso: Filtrar por categoría y precio (con o sin distribuidor)
+                    if (isPriceFromValid)
+                    {
+                        if (!string.IsNullOrEmpty(filtros.Distri))
+                        {
+                            // Caso: Filtrar por categoría, precio y distribuidor específico
+                            requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/filtrados/{filtros.PriceFrom.Value}/distribuidor/{filtros.Distri}/categoria/{currentCategoryId}";
+                        }
+                        else
+                        {
+                            // Distribuidor no especificado o es "todos"
+                            requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/filtrados/{filtros.PriceFrom.Value}/categoria/{currentCategoryId}";
+                        }
+                    }
+                    else if (!string.IsNullOrEmpty(filtros.Distri))
+                    {
+                        // Caso: Filtrar por categoría y distribuidor
+                        requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/filtrados/distribuidor/{filtros.Distri}/categoria/{currentCategoryId}";
+                    }
+                    else
+                    {
+                        // Caso: Filtrar solo por categoría
+                        requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{currentCategoryId}";
+                    }
+                }
+
+                var request = new HttpRequestMessage();
+                request.RequestUri = new Uri(requestUri);
+                request.Method = HttpMethod.Get;
+                request.Headers.Add("Accept", "application/json");
+
+                HttpResponseMessage response = await _cliente.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string contentCat = await response.Content.ReadAsStringAsync();
+                    var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Product>>(contentCat);
+
+                    cvPro.ItemsSource = resultadoCat;
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("error", ex.Message, "ok");
+            }
+
+            NotifyPropertyChanged();
+        
+    }
+
 
         private async Task UpdateFavoriteStatusOfProducts()
         {
@@ -125,36 +206,28 @@ namespace ComparaYa
                 string requestUri;
                 if (currentCategoryId.HasValue)
                 {
-                   
+
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentCategoryId.Value}/{currentPage}/{limit}";
                 }
                 else
                 {
-                    
+
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentPage}/{limit}";
                 }
                 var request = new HttpRequestMessage();
-                request.RequestUri = new Uri($"{requestUri}");
+                request.RequestUri = new Uri(requestUri);
                 request.Method = HttpMethod.Get;
                 request.Headers.Add("Accept", "application/json");
 
                 HttpResponseMessage response = await _cliente.SendAsync(request);
                 if (response.StatusCode == HttpStatusCode.OK)
+
                 {
                     string contentCat = await response.Content.ReadAsStringAsync();
+
                     var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Product>>(contentCat);
 
-                    foreach (var prod in resultadoCat)
-                    {
-                        App.ProductosCollection.Add(prod);
-                    }
-                 
-
-                    currentPage++;
-                    if (resultadoCat.Count < limit)
-                    {
-                        cvPro.Footer = null;
-                    }
+                   cvPro.ItemsSource = resultadoCat;    
                 }
             }
             catch (Exception ex)
@@ -230,9 +303,11 @@ namespace ComparaYa
 
         private async void FilterByCategory(object sender, EventArgs e)
         {
+           
             var button = (Button)sender;
             var item = (Categoria)button.BindingContext;
             currentCategoryId = item.id;
+           
 
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{item.id}");
@@ -247,7 +322,7 @@ namespace ComparaYa
 
                 var resultado = JsonConvert.DeserializeObject<ObservableCollection<Product>>(content);
                 App.ProductosCollection.Clear();
-
+                cvPro.ItemsSource = App.ProductosCollection;
                 foreach (var producto in resultado)
                 {
                     App.ProductosCollection.Add(producto);

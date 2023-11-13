@@ -9,6 +9,7 @@
     android:TabbedPage.ToolbarPlacement="Bottom"
     BarBackgroundColor="#f4f4f4"
     BarTextColor="Black"
+   
     NavigationPage.HasNavigationBar="False">
 
     <local:ProductsView Title="Productos" />

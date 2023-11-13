@@ -1,4 +1,5 @@
-﻿using ComparaYa.Models;
+﻿using Android.Views;
+using ComparaYa.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,7 +18,7 @@ namespace ComparaYa
     {
         public ObservableCollection<string> Items { get; set; }
         public ObservableCollection<string> Distris { get; set; }
-        float priceFrom;
+        decimal? priceFrom;
         string distri;
         public Modal()
         {
@@ -33,7 +34,7 @@ namespace ComparaYa
 
             Distris = new ObservableCollection<string>
             {
-                "D1", "Olimpica", "Exito"
+                "D1", "OLIMPICA", "EXITO"
             };
             BindingContext = this;
         }
@@ -44,7 +45,7 @@ namespace ComparaYa
         {
             var button = (Button)sender;
             var si = button.Text.Trim();
-            var precio = float.Parse(si, CultureInfo.InvariantCulture);
+            var precio = decimal.Parse(si, CultureInfo.InvariantCulture);
             priceFrom = precio;
             Console.WriteLine(priceFrom.ToString());
 
@@ -55,11 +56,18 @@ namespace ComparaYa
         {
 
 
-            
-                MessagingCenter.Send(this, "FilterProducts", priceFrom);
-          
-      
+
+            var filterData = new FiltrosData
+            {
+                PriceFrom = priceFrom, 
+                Distri = distri         
+            };
+
            
+
+            MessagingCenter.Send(this, "FilterProducts", filterData);
+
+
         }
 
 

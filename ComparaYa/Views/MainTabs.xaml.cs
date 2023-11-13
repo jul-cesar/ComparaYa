@@ -13,11 +13,13 @@ namespace ComparaYa
     public partial class MainTabs : TabbedPage
     {
 
-
         public MainTabs()
         {
             InitializeComponent();
 
         }
+
+        
+       
     }
 }
