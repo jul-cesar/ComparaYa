@@ -28,12 +28,21 @@
                 AlignItems="Center"
                 JustifyContent="SpaceBetween">
                 <Label
-                    Margin="15"
+                    Margin="12"
                     FontFamily="PPI"
                     FontSize="25"
                     Text="Explora productos"
                     TextColor="Black" />
 
+                <Button
+                    BackgroundColor="White"
+                    BorderColor="Gray"
+                    BorderWidth="2"
+                    Clicked="Button_Clicked"
+                    CornerRadius="20"
+                    FontFamily="PPI"
+                    Text="TODOS"
+                    TextColor="Black" />
 
                 <lottie:AnimationView
                     Margin="10"
@@ -109,13 +118,13 @@
 
                     <StackLayout VerticalOptions="CenterAndExpand">
                         <lottie:AnimationView
-                            Animation="loadd.json"
+                            Animation="emptysearch.json"
                             AutoPlay="True"
-                            HeightRequest="55"
+                            HeightRequest="60"
                             HorizontalOptions="FillAndExpand"
                             RepeatMode="Infinite"
-                            VerticalOptions="CenterAndExpand"
-                            WidthRequest="55" />
+                            VerticalOptions="FillAndExpand"
+                            WidthRequest="60" />
 
 
 

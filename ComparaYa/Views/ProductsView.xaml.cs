@@ -22,6 +22,7 @@ using ComparaYa.localBD;
 using Firebase.Auth;
 using System.Globalization;
 using System.Web;
+using static Android.InputMethodServices.Keyboard;
 
 namespace ComparaYa
 {
@@ -38,6 +39,9 @@ namespace ComparaYa
         private List<Product> filteredTips;
         private readonly HttpClient _cliente = new HttpClient();
         bool isFavorite = false;
+        private bool isSearching = false;
+        string currentDistri;
+        decimal? currentPriceFrom = 0;
         private int? currentCategoryId = null;
         public string ApiKey = "AIzaSyAjgxZOgtQq3PwwHuwIE7MEu05KUIgW4zQ";
   
@@ -46,7 +50,7 @@ namespace ComparaYa
             InitializeComponent();
             BindingContext = this;
             
-
+            Console.WriteLine(currentDistri);
 
         }
 
@@ -54,14 +58,18 @@ namespace ComparaYa
 
         protected override async void OnAppearing()
         {
-
-            MessagingCenter.Subscribe<Modal, FiltrosData>(this, "FilterProducts", async (sender, filterData) =>
-            {
-               await ApplyFilter(filterData);
-            });
+         
+          
             base.OnAppearing();
+            await GetUserRol();
+            MessagingCenter.Subscribe<Modal, FiltrosData>(this, "FilterProducts", async (sender, filterData) =>
 
-           await GetUserInfo();
+            {
+                currentDistri = filterData.Distri;
+                currentPriceFrom = filterData.PriceFrom;
+                await ApplyFilter(filterData);
+            });
+            await GetUserInfo();
             currentCategoryId = null;
             currentPage = 1;
             if (App.ProductosCollection.Count == 0 || App.ProductosCollection == null)
@@ -192,11 +200,9 @@ namespace ComparaYa
         }
 
 
-
-        public async Task LoadMoreItems()
+        private async Task LoadMoreItems()
         {
-
-            if (isLoading || currentCategoryId == null) return;
+            if (isLoading) return;
 
             isLoading = true;
             loadMoreActivityIndicator.IsRunning = true;
@@ -204,40 +210,45 @@ namespace ComparaYa
             try
             {
                 string requestUri;
-                if (currentCategoryId.HasValue)
-                {
 
+                // Check if both category and distributor are selected
+                if (currentCategoryId.HasValue && !string.IsNullOrEmpty(currentDistri))
+                {
+                    // Construct URI with both category and distributor
+                    requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentCategoryId.Value}/distribuidor/{currentDistri}/{currentPage}/{limit}";
+                }
+                else if (currentCategoryId.HasValue)
+                {
+                    // Construct URI with only category
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentCategoryId.Value}/{currentPage}/{limit}";
                 }
                 else
                 {
-
+                    // Default URI when no category or distributor is selected
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentPage}/{limit}";
                 }
-                var request = new HttpRequestMessage();
-                request.RequestUri = new Uri(requestUri);
-                request.Method = HttpMethod.Get;
+
+                var request = new HttpRequestMessage
+                {
+                    RequestUri = new Uri(requestUri),
+                    Method = HttpMethod.Get
+                };
                 request.Headers.Add("Accept", "application/json");
 
                 HttpResponseMessage response = await _cliente.SendAsync(request);
                 if (response.StatusCode == HttpStatusCode.OK)
-
                 {
                     string contentCat = await response.Content.ReadAsStringAsync();
-
                     var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Product>>(contentCat);
-
-                   cvPro.ItemsSource = resultadoCat;    
+                    // Update your collection here...
                 }
             }
             catch (Exception ex)
             {
-                await DisplayAlert("error", "error", "ok");
-
+                await DisplayAlert("error", ex.Message, "ok");
             }
             finally
             {
-
                 loadMoreActivityIndicator.IsRunning = false;
                 isLoading = false;
             }
@@ -268,9 +279,41 @@ namespace ComparaYa
                 {
                     App.CategoriasCollection.Add(categoria);
                 }
+               
+
+              
 
                 NotifyPropertyChanged();
 ;            }
+        }
+
+        protected async Task GetUserRol()
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/roles/{App.currentId}");
+            request.Method = HttpMethod.Get;
+            request.Headers.Add("Accept", "application/json");
+
+            HttpResponseMessage response = await _cliente.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string contentCat = await response.Content.ReadAsStringAsync();
+                var roles = JsonConvert.DeserializeObject<List<Rol>>(contentCat);
+
+                if (roles != null && roles.Any())
+                {
+                    App.currentUserRol = roles.First().nombre;
+                    NotifyPropertyChanged();
+                }
+                else
+                {
+                    App.currentUserRol = "user";
+                }
+            }
+            else
+            {
+                Console.WriteLine("xd");
+            }
         }
 
 
@@ -296,45 +339,56 @@ namespace ComparaYa
                 {
                     App.ProductosCollection.Add(producto);
                 }
-                NotifyPropertyChanged();
+                cvPro.ItemsSource = null;
+                cvPro.ItemsSource = App.ProductosCollection;
+
+                NotifyPropertyChanged(nameof(cvPro.ItemsSource));
+               
             }
         }
 
-
         private async void FilterByCategory(object sender, EventArgs e)
         {
-           
             var button = (Button)sender;
             var item = (Categoria)button.BindingContext;
             currentCategoryId = item.id;
-           
 
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{item.id}");
-            request.Method = HttpMethod.Get;
+         
+            isSearching = false;
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/categoria/{item.id}"),
+                Method = HttpMethod.Get
+            };
             request.Headers.Add("Accept", "application/json");
 
             HttpResponseMessage response = await _cliente.SendAsync(request);
             if (response.StatusCode == HttpStatusCode.OK)
-
             {
                 string content = await response.Content.ReadAsStringAsync();
-
                 var resultado = JsonConvert.DeserializeObject<ObservableCollection<Product>>(content);
                 App.ProductosCollection.Clear();
-                cvPro.ItemsSource = App.ProductosCollection;
                 foreach (var producto in resultado)
                 {
                     App.ProductosCollection.Add(producto);
-                    
                 }
-               
-                NotifyPropertyChanged();
+
+                // Since we are updating the App.ProductosCollection, we need to re-assign it to the cvPro.ItemsSource
+                // to trigger the UI update. This is necessary because simply clearing and adding to the ObservableCollection
+                // doesn't trigger the INotifyPropertyChanged interface when the collection reference itself doesn't change.
+                cvPro.ItemsSource = null;
+                cvPro.ItemsSource = App.ProductosCollection;
+
+                NotifyPropertyChanged(nameof(cvPro.ItemsSource));
+            }
+            else
+            {
+                Console.WriteLine("xd");
             }
         }
 
 
-       
         public async Task imgModal(Product img)
         {
 
@@ -352,20 +406,36 @@ namespace ComparaYa
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-           
-            string searchText = e.NewTextValue;
+            string searchText = e.NewTextValue?.Trim();
 
-            if (string.IsNullOrWhiteSpace(searchText))
+            if (string.IsNullOrEmpty(searchText))
             {
+                // Reset to the full list if the search text is cleared.
                 cvPro.ItemsSource = App.ProductosCollection;
+                isSearching = false;
             }
             else
             {
-                filteredTips = App.ProductosCollection.Where(tip => tip.nombre.ToLower().Normalize(NormalizationForm.FormD).Contains((searchText.ToLower()))).ToList();
-                cvPro.ItemsSource = filteredTips;
-                NotifyPropertyChanged();
+                // Apply the search filter.
+                cvPro.ItemsSource = FiltrarProductos(searchText);
+                isSearching = true;
             }
+
+            // Notify the UI that the source has been updated.
+            NotifyPropertyChanged(nameof(cvPro.ItemsSource));
         }
+
+
+        private ObservableCollection<Product> FiltrarProductos(string searchText)
+        {
+            var filteredList = App.ProductosCollection
+                .Where(producto => producto.nombre.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+
+
+
+            return new ObservableCollection<Product>(filteredList);
+        }
+
 
 
 
@@ -508,8 +578,9 @@ namespace ComparaYa
             NotifyPropertyChanged();
         }
 
-
-
-
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await FetchProductsFromServer();
+        }
     }
 }

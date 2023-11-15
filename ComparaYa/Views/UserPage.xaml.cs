@@ -30,15 +30,25 @@ namespace ComparaYa
         public UserPage()
         {
             InitializeComponent();
+            
           
             logoutButton.Clicked += LogoutButton_Clicked;
+           
         }
 
         protected override async void OnAppearing()
         {
             await GetUserInfo();
 
-           
+            rol.Text = App.currentUserRol;
+            if (App.currentUserRol == "admin")
+            {
+                del.IsVisible = true;
+            }
+            else
+            {
+                del.IsVisible = false;
+            }
 
         }
 
@@ -135,6 +145,11 @@ namespace ComparaYa
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new DeleteAdmin());
         }
     }
 }

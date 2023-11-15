@@ -12,6 +12,7 @@ namespace ComparaYa
     public partial class App : Application
     {
        public static int? currentId;
+        public static string currentUserRol;
         private static Db _db;
         public static Db db
         {

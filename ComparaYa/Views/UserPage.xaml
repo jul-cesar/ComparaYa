@@ -26,6 +26,13 @@
                             FontAttributes="Bold"
                             HorizontalOptions="Center"
                             TextColor="Black" />
+
+                        <Label
+                            x:Name="rol"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            TextColor="Black" />
+
                         <Label
                             x:Name="emailUser"
                             FontAttributes="Italic"
@@ -42,6 +49,16 @@
                     Clicked="Button_Clicked_1"
                     CornerRadius="20"
                     Text="Mis favoritos" />
+
+                <Button
+                    x:Name="del"
+                    BackgroundColor="White"
+                    BorderColor="Gray"
+                    BorderWidth="1"
+                    Clicked="Button_Clicked"
+                    CornerRadius="20"
+                    IsVisible="false"
+                    Text="Eliminar productos" />
                 <StackLayout VerticalOptions="EndAndExpand">
                     <Button
                         x:Name="logoutButton"

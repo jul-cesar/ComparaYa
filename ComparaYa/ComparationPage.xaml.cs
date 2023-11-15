@@ -83,9 +83,9 @@ namespace ComparaYa
             var normalizedNombre1 = NormalizeString(name1);
             var normalizedNombre2 = NormalizeString(name2);
 
-            return Fuzz.PartialRatio(normalizedNombre1, normalizedNombre2) > RatioThreshold ||
-                   Fuzz.TokenSortRatio(normalizedNombre1, normalizedNombre2) > (TokenSortRatioThreshold - 10) ||
-                   Fuzz.Ratio(normalizedNombre1, normalizedNombre2) > (RatioThreshold - 10);
+            return 
+                   Fuzz.TokenSortRatio(normalizedNombre1, normalizedNombre2) > (TokenSortRatioThreshold) ||
+                   Fuzz.Ratio(normalizedNombre1, normalizedNombre2) > (RatioThreshold);
         }
         private string NormalizeString(string input)
             {
