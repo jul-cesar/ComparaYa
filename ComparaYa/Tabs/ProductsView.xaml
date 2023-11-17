@@ -38,7 +38,7 @@
                     BackgroundColor="White"
                     BorderColor="Gray"
                     BorderWidth="2"
-                    Clicked="Button_Clicked"
+                    Clicked="TodosCategory"
                     CornerRadius="20"
                     FontFamily="PPI"
                     Text="TODOS"

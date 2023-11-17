@@ -463,13 +463,7 @@ namespace ComparaYa
             await Navigation.ShowPopupAsync(new Modal());
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        }
+       
 
         private async void Comparation(object sender, EventArgs e)
         {
@@ -492,21 +486,6 @@ namespace ComparaYa
             }
         }
 
-        private void AnimationView_Clicked_1(object sender, EventArgs e)
-        {
-            if (sender is Lottie.Forms.AnimationView animationView)
-            {
-             
-                if (animationView.IsAnimating)
-                {
-                    animationView.PauseAnimation();
-                }
-                else
-                {
-                    animationView.PlayAnimation();
-                }
-            }
-    }
 
         private async Task GetUserInfo()
         {
@@ -550,8 +529,6 @@ namespace ComparaYa
         }
 
 
-
-
         public async void AddToFavorite(object sender, EventArgs e)
         {
             var button = (Image)sender;
@@ -578,9 +555,18 @@ namespace ComparaYa
             NotifyPropertyChanged();
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void TodosCategory(object sender, EventArgs e)
         {
             await FetchProductsFromServer();
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         }
     }
 }

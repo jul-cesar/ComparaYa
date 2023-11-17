@@ -101,7 +101,7 @@ namespace ComparaYa
 
 
 
-        private void delete_Clicked(object sender, EventArgs e)
+        private void DeleteFromCart(object sender, EventArgs e)
         {
             var botonxd = (AnimationView)sender;
             var itemxd = (Product)botonxd.BindingContext;
@@ -120,7 +120,7 @@ namespace ComparaYa
         }
 
 
-        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        private async void SendImgToModal(object sender, EventArgs e)
         {
             var button = (Image)sender;
             var item = (Product)button.BindingContext;
@@ -135,7 +135,7 @@ namespace ComparaYa
 
         }
 
-        private  async void Button_Clicked(object sender, EventArgs e)
+        private  async void DisminuirCantidad(object sender, EventArgs e)
         {
             var button = (Button)sender;
             var item = (Product)button.BindingContext;
@@ -154,7 +154,7 @@ namespace ComparaYa
             }
         }
 
-        private async  void Button_Clicked_1(object sender, EventArgs e)     
+        private async  void AumentarCantidad(object sender, EventArgs e)     
         {
             var button = (Button)sender;
             var item = (Product)button.BindingContext;
@@ -170,7 +170,7 @@ namespace ComparaYa
 
         }
 
-        private async void backcart_Clicked(object sender, EventArgs e)
+        private async void GoToLastPage(object sender, EventArgs e)
         {
             if (Navigation.NavigationStack.Count > 1)
             {

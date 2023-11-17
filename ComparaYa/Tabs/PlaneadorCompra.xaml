@@ -23,7 +23,7 @@
                 Margin="10"
                 Animation="back.json"
                 AutoPlay="True"
-                Clicked="backcart_Clicked"
+                Clicked="GoToLastPage"
                 HeightRequest="80"
                 IsVisible="false"
                 VerticalOptions="StartAndExpand"
@@ -75,7 +75,7 @@
                             Source="{Binding imagen_url}"
                             WidthRequest="230">
                             <Image.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+                                <TapGestureRecognizer Tapped="SendImgToModal" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Frame
@@ -176,7 +176,7 @@
                                         BackgroundColor="White"
                                         BorderColor="Gray"
                                         BorderWidth="1"
-                                        Clicked="Button_Clicked_1"
+                                        Clicked="AumentarCantidad"
                                         CornerRadius="20"
                                         HeightRequest="20"
                                         HorizontalOptions="Center"
@@ -199,7 +199,7 @@
                                         BackgroundColor="White"
                                         BorderColor="Gray"
                                         BorderWidth="1"
-                                        Clicked="Button_Clicked"
+                                        Clicked="DisminuirCantidad"
                                         CornerRadius="20"
                                         HeightRequest="45"
                                         HorizontalOptions="Center"
@@ -212,7 +212,7 @@
                                         Grid.Row="4"
                                         Animation="deleteAni.json"
                                         AutoPlay="True"
-                                        Clicked="delete_Clicked"
+                                        Clicked="DeleteFromCart"
                                         HeightRequest="60"
                                         HorizontalOptions="EndAndExpand"
                                         RepeatCount="2"

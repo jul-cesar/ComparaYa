@@ -19,7 +19,7 @@ namespace ComparaYa.localBD
 
         public Task<List<Favorite>> GetFavoritosAsync(int? userId)
         {
-            // Using a LINQ query to filter favorites by the provided user ID
+            
             return _connection.Table<Favorite>().Where(f => f.UsuarioId == userId).ToListAsync();
         }
 

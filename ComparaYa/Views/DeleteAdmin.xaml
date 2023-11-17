@@ -26,7 +26,7 @@
                         Margin="12"
                         FontFamily="PPI"
                         FontSize="25"
-                        Text="Explora productos"
+                        Text="Elimina productos"
                         TextColor="Black" />
 
 

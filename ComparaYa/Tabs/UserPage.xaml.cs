@@ -126,7 +126,7 @@ namespace ComparaYa
 
 
 
-        private async void Button_Clicked_1(object sender, EventArgs e)
+        private async void GoToFavorites(object sender, EventArgs e)
         {
             backdark.IsVisible = true;
             backdark.IsVisible = load.IsVisible = true;
@@ -147,7 +147,7 @@ namespace ComparaYa
 
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private async void GoToDeletePage(object sender, EventArgs e)
         {
             Navigation.PushAsync(new DeleteAdmin());
         }

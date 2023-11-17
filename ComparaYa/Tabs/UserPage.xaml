@@ -46,7 +46,7 @@
                     BackgroundColor="White"
                     BorderColor="Gray"
                     BorderWidth="1"
-                    Clicked="Button_Clicked_1"
+                    Clicked="GoToFavorites"
                     CornerRadius="20"
                     Text="Mis favoritos" />
 
@@ -55,7 +55,7 @@
                     BackgroundColor="White"
                     BorderColor="Gray"
                     BorderWidth="1"
-                    Clicked="Button_Clicked"
+                    Clicked="GoToDeletePage"
                     CornerRadius="20"
                     IsVisible="false"
                     Text="Eliminar productos" />

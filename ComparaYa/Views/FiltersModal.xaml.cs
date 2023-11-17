@@ -29,7 +29,7 @@ namespace ComparaYa
 
             Items = new ObservableCollection<string>
             {
-                "5000", "3000", "4000", "2000", "1000"
+                "50000", "30000", "20000", "10000", "5000"
             };
 
             Distris = new ObservableCollection<string>
@@ -66,7 +66,7 @@ namespace ComparaYa
            
 
             MessagingCenter.Send(this, "FilterProducts", filterData);
-
+            Dismiss(null);
 
         }
 

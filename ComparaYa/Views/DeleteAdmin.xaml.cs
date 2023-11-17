@@ -139,7 +139,7 @@ namespace ComparaYa
             HttpResponseMessage response = await _cliente.SendAsync(request);
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                // Elimina el producto de la colección local
+                
               
 
 
