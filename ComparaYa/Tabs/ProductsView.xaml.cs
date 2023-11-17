@@ -29,14 +29,10 @@ namespace ComparaYa
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductsView : ContentPage, INotifyPropertyChanged
     {
-        public decimal ipEmulador;
-        public decimal ipPcCelu;
+     
         int currentPage = 1;
         int limit = 16;
-        Categoria selected;
         bool isLoading = false;
-        private bool isRefreshing;
-        private List<Product> filteredTips;
         private readonly HttpClient _cliente = new HttpClient();
         bool isFavorite = false;
         private bool isSearching = false;
@@ -49,9 +45,7 @@ namespace ComparaYa
         {
             InitializeComponent();
             BindingContext = this;
-            
             Console.WriteLine(currentDistri);
-
         }
 
 
@@ -62,16 +56,20 @@ namespace ComparaYa
           
             base.OnAppearing();
             await GetUserRol();
-            MessagingCenter.Subscribe<Modal, FiltrosData>(this, "FilterProducts", async (sender, filterData) =>
 
+            //Recibo info de los filtros; precio, distribuidora
+            MessagingCenter.Subscribe<Modal, FiltrosData>(this, "FilterProducts", async (sender, filterData) =>
             {
                 currentDistri = filterData.Distri;
                 currentPriceFrom = filterData.PriceFrom;
                 await ApplyFilter(filterData);
             });
+
             await GetUserInfo();
             currentCategoryId = null;
             currentPage = 1;
+
+            // Solo traer productos cuando no hay, para no hacer un req cada que se cambia de tab
             if (App.ProductosCollection.Count == 0 || App.ProductosCollection == null)
             {
 
@@ -85,9 +83,9 @@ namespace ComparaYa
                 await FetchCategoriasFromServer();
             }
 
+
             await UpdateFavoriteStatusOfProducts(); 
 
-            cvPro.ItemsSource = App.ProductosCollection;
 
             cvPro.ItemsSource = App.ProductosCollection; 
 
@@ -211,20 +209,20 @@ namespace ComparaYa
             {
                 string requestUri;
 
-                // Check if both category and distributor are selected
+                
                 if (currentCategoryId.HasValue && !string.IsNullOrEmpty(currentDistri))
                 {
-                    // Construct URI with both category and distributor
+                   
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentCategoryId.Value}/distribuidor/{currentDistri}/{currentPage}/{limit}";
                 }
                 else if (currentCategoryId.HasValue)
                 {
-                    // Construct URI with only category
+                    
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentCategoryId.Value}/{currentPage}/{limit}";
                 }
                 else
                 {
-                    // Default URI when no category or distributor is selected
+                   
                     requestUri = $"https://api-compara-ya-git-main-jul-cesars-projects.vercel.app/productos/{currentPage}/{limit}";
                 }
 
@@ -240,7 +238,7 @@ namespace ComparaYa
                 {
                     string contentCat = await response.Content.ReadAsStringAsync();
                     var resultadoCat = JsonConvert.DeserializeObject<ObservableCollection<Product>>(contentCat);
-                    // Update your collection here...
+                  
                 }
             }
             catch (Exception ex)
@@ -254,8 +252,6 @@ namespace ComparaYa
             }
             NotifyPropertyChanged();
         }
-
-
 
 
 
@@ -374,9 +370,6 @@ namespace ComparaYa
                     App.ProductosCollection.Add(producto);
                 }
 
-                // Since we are updating the App.ProductosCollection, we need to re-assign it to the cvPro.ItemsSource
-                // to trigger the UI update. This is necessary because simply clearing and adding to the ObservableCollection
-                // doesn't trigger the INotifyPropertyChanged interface when the collection reference itself doesn't change.
                 cvPro.ItemsSource = null;
                 cvPro.ItemsSource = App.ProductosCollection;
 
@@ -404,7 +397,7 @@ namespace ComparaYa
             await imgModal(item);
         }
 
-        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar(object sender, TextChangedEventArgs e)
         {
             string searchText = e.NewTextValue?.Trim();
 

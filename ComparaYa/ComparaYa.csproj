@@ -13,6 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="ViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\fonts\Poppins-Regular.ttf" />
     <None Remove="Resources\fonts\Poppins-SemiBoldItalic.ttf" />
   </ItemGroup>
@@ -36,40 +42,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="ComparationPage.xaml">
+    <EmbeddedResource Update="Views\ComparationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="DeleteAdmin.xaml">
+    <EmbeddedResource Update="Views\DeleteAdmin.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Favs.xaml">
+    <EmbeddedResource Update="Views\Favs.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="ImgModal.xaml">
+    <EmbeddedResource Update="Views\ImgModal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Modal.xaml">
+    <EmbeddedResource Update="Views\FiltersModal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="PlaneadorCompra.xaml">
+    <EmbeddedResource Update="Tabs\PlaneadorCompra.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\ProductsView.xaml">
+    <EmbeddedResource Update="Tabs\ProductsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\UserPage.xaml">
+    <EmbeddedResource Update="Tabs\UserPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MainTabs.xaml">
+    <EmbeddedResource Update="Tabs\MainTabs.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="WelcomePage.xaml">
+    <EmbeddedResource Update="Views\WelcomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -81,6 +87,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <Compile Update="Views\FiltersModal.xaml.cs">
+      <DependentUpon>FiltersModal.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -97,7 +97,7 @@
                     HorizontalOptions="FillAndExpand"
                     Placeholder="Ej: Arroz"
                     PlaceholderColor="#9E9E9E"
-                    TextChanged="SearchBar_TextChanged"
+                    TextChanged="SearchBar"
                     TextColor="Black"
                     VerticalOptions="CenterAndExpand" />
             </FlexLayout>
