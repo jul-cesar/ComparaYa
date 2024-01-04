@@ -6,10 +6,10 @@
     xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     BackgroundColor="White"
     NavigationPage.HasNavigationBar="False">
-    <StackLayout>
+    <StackLayout Padding="4">
         <FlexLayout AlignContent="Center" AlignItems="Center">
             <lottie:AnimationView
-                Margin="0,0,30,0"
+                Margin="0,0,0,0"
                 Animation="back.json"
                 AutoPlay="True"
                 Clicked="AnimationView_Clicked"

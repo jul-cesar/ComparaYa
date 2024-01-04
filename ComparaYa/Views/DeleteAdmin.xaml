@@ -5,6 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ComparaYa"
     xmlns:lottie="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+        BackgroundColor="#fdfdff"
+
     NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <Grid>
@@ -18,19 +20,26 @@
 
 
 
-                <FlexLayout
-                    Grid.Row="0"
-                    AlignItems="Center"
-                    JustifyContent="SpaceBetween">
-                    <Label
-                        Margin="12"
-                        FontFamily="PPI"
-                        FontSize="25"
-                        Text="Elimina productos"
-                        TextColor="Black" />
+                <FlexLayout AlignContent="Center" AlignItems="Center">
+                     <lottie:AnimationView
+                    Margin="0,0,0,0"
+                    Animation="back.json"
+                    AutoPlay="True"
+                    Clicked="AnimationView_Clicked"
+                    HeightRequest="80"
+                    HorizontalOptions="StartAndExpand"
+                    RepeatCount="3"
+                    VerticalOptions="Fill"
+                    WidthRequest="60" />
 
-
-
+                            <Label
+                    Margin="10"
+                    Padding="5"
+                    FontFamily="PPI"
+                    FontSize="20"
+                    HorizontalTextAlignment="Start"
+                    Text="Elimina productos"
+                    TextColor="Black" />    
                 </FlexLayout>
 
 

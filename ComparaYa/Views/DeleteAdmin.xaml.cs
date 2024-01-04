@@ -200,8 +200,16 @@ namespace ComparaYa
 
 
         return new ObservableCollection<Product>(filteredList);
-    } 
-}
+    }
+
+        private async void AnimationView_Clicked(object sender, EventArgs e)
+        {
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                await Navigation.PopAsync();
+            }
+        }
+    }
 
 
 }

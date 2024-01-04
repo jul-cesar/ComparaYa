@@ -15,6 +15,7 @@ using Xamarin.CommunityToolkit.Extensions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using FuzzySharp;
+using ComparaYa.localBD;
 
 namespace ComparaYa
 {
@@ -128,10 +129,31 @@ namespace ComparaYa
         }
 
         
-        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        private async void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
+            var button = (Image)sender;
+            var item = (Product)button.BindingContext;
+            item.isFavorite = !item.isFavorite;
+            item.FavoriteIcon = item.isFavorite ? "sifav.png" : "nofav.png";
 
-            
+            if (item.isFavorite)
+            {
+                var existingFavorite = await App.db.GetFavoritoByProductoId(item.id, App.currentId);
+                if (existingFavorite == null)
+                {
+                    var favorito = new Favorite { UsuarioId = App.currentId, ProductoId = item.id };
+                    await App.db.SaveFavoritoAsync(favorito);
+                    UserDialogs.Instance.Toast("Producto agregado a favoritos");
+                }
+            }
+            else
+            {
+                await App.db.DeleteFavoritoAsync(item.id, App.currentId);
+                UserDialogs.Instance.Toast("Producto eliminado de favoritos");
+            }
+
+            NotifyPropertyChanged();
+
         }
 
         private async void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)

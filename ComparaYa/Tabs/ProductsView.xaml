@@ -13,7 +13,7 @@
     </ContentPage.IconImageSource>
 
     <Grid>
-        <Grid Margin="3,15,5,0" Padding="5">
+        <Grid Margin="3,15,5,0" Padding="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="80" />
                 <RowDefinition Height="80" />
@@ -30,7 +30,7 @@
                 <Label
                     Margin="12"
                     FontFamily="PPI"
-                    FontSize="25"
+                    FontSize="22"
                     Text="Explora productos"
                     TextColor="Black" />
 
